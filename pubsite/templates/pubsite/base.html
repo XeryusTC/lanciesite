@@ -1,3 +1,23 @@
 {% extends 'lanciesite/base.html' %}
+{% load staticfiles %}
 
-{% block content %}{% endblock content %}
+{% block css %}
+    <link href="{% static 'pubsite/style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block title %}LanCie{# TODO: make title dynamic based on the current event #}{% endblock title %}
+
+{% block content %}
+<div id="menu">
+    <a href="/">Home</a>
+    <a href="/register">Register</a>
+    <a href="/checklist">Checlist</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    {% block menu %}&nbsp;{% endblock menu %}
+</div>
+
+<div id="page">
+    {% block page %}{% endblock page %}
+</div>
+{% endblock content %}
