@@ -13,16 +13,20 @@ class Event(models.Model):
 		return self.participant_set.count()
 	get_total_registrations.short_description = "Total registrations"
 
+	def __str__(self):
+		return self.name
+
+
 class Participant(models.Model):
 	user = models.OneToOneField(User)
 
 	address = models.CharField(max_length=255)
+	city = models.CharField(max_length=255)
 	telephone = models.CharField(max_length=15)
 	iban = models.CharField(max_length=16)
 	iban.verbose_name = "IBAN"
-	city = models.CharField(max_length=255)
 
-	transport = models.BooleanField()
+	transport = models.BooleanField(default=False)
 	friday = models.BooleanField(default=True)
 	saturday = models.BooleanField(default=True)
 	sunday = models.BooleanField(default=True)
@@ -32,7 +36,7 @@ class Participant(models.Model):
 	def get_price(self):
 		# TODO: calculate price of participation
 		return 20
-	get_price.short_description = "Price of participation"
+	get_price.short_description = "Price"
 
 	def __str__(self):
 		return "{} ({})".format(self.user.get_full_name(), self.event.name)
