@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    {% block css %}{% endblock css %}
+    {% block scripts %}{% endblock scripts %}
+    <title>{% block title %}You shouldn't see this title{% endblock title %}</title>
+</head>
+<body>
+
+<div id="header">{% block header %}{% endblock header %}</div>
+
+<div id="content">{% block content %}You shouldn't see this text{% endblock content %}</div>
+
+<div id="footer">{% block footer %}{% endblock footer %}</div>
+
+</body>
+</html>
