@@ -21,6 +21,7 @@ class Participant(models.Model):
 	user = models.OneToOneField(User)
 
 	address = models.CharField(max_length=255)
+	postal_code = models.CharField(max_length=6)
 	city = models.CharField(max_length=255)
 	telephone = models.CharField(max_length=15)
 	iban = models.CharField(max_length=16)
