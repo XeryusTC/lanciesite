@@ -9,6 +9,10 @@ class AboutView(TemplateView):
     template_name = "pubsite/about.html"
 
 
+class CompleteView(TemplateView):
+    template_name = "pubsite/complete.html"
+
+
 class ContactView(FormView):
     template_name = "pubsite/contact.html"
     form_class = ContactForm
@@ -26,6 +30,7 @@ class CheckListView(TemplateView):
 class RegisterView(FormView):
     template_name = "pubsite/register.html"
     form_class = RegisterForm
+    success_url = reverse_lazy('pub:complete')
 
 
 class ThanksView(TemplateView):

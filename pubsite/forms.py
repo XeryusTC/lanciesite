@@ -1,23 +1,23 @@
 from django.forms import Form, CharField, EmailField, BooleanField, Textarea
 
 class ContactForm(Form):
-    name = CharField(required=True)
-    email = EmailField(required=True)
-    subject = CharField(required=True)
+    name = CharField()
+    email = EmailField()
+    subject = CharField()
     message = CharField(widget=Textarea)
 
 
 class RegisterForm(Form):
-    first_name =   CharField(required=True)
-    last_name =    CharField(required=True)
-    address =      CharField(required=True)
-    postal_code =  CharField(required=True, max_length=6, min_length=6)
-    city =         CharField(required=True)
-    phone_number = CharField(required=True, max_length=15)
-    iban =         CharField(required=True, max_length=16, label="IBAN")
-    email =        EmailField(required=True)
+    first_name =   CharField()
+    last_name =    CharField()
+    address =      CharField()
+    postal_code =  CharField(max_length=6, min_length=6)
+    city =         CharField()
+    phone_number = CharField(max_length=15)
+    iban =         CharField(max_length=16, label="IBAN")
+    email =        EmailField()
 
-    friday = BooleanField()
-    saturday = BooleanField()
-    sunday = BooleanField()
+    friday = BooleanField(required=False)
+    saturday = BooleanField(required=False)
+    sunday = BooleanField(required=False)
     transport = BooleanField(label="Transport service")
