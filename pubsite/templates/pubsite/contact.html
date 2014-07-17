@@ -3,5 +3,14 @@
 {% block page %}
 Contact
 <br />
-{{ form.as_p }}
+<form action="" method="post">
+<table>
+    {% csrf_token %}
+    {{ form.as_table }}
+<tr>
+    <td></td>
+    <td><input type="submit" value="Send" /></td>
+</tr>
+</table>
+</form>
 {% endblock page %}

@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
@@ -11,6 +12,7 @@ class AboutView(TemplateView):
 class ContactView(FormView):
     template_name = "pubsite/contact.html"
     form_class = ContactForm
+    success_url = reverse_lazy('pub:thanks')
 
 
 class IndexView(TemplateView):
@@ -24,4 +26,8 @@ class CheckListView(TemplateView):
 class RegisterView(FormView):
     template_name = "pubsite/register.html"
     form_class = RegisterForm
+
+
+class ThanksView(TemplateView):
+    template_name = "pubsite/thanks.html"
 

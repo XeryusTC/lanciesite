@@ -6,5 +6,6 @@ urlpatterns = patterns('views',
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^checklist/$', views.CheckListView.as_view(), name='checklist'),
     url(r'^contact/$', views.ContactView.as_view(), name='contact'),
+    url(r'^contact/thanks/$', views.ThanksView.as_view(), name='thanks'),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
 )
