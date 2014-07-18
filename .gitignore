@@ -56,3 +56,6 @@ docs/_build/
 
 # Sublime Text project and workspace files
 *.sublime*
+
+# settings
+lanciesite/email_settings.py

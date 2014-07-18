@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import EmailMessage
 from django.forms import Form, CharField, EmailField, BooleanField, Textarea
 
 class ContactForm(Form):
@@ -5,6 +7,15 @@ class ContactForm(Form):
     email = EmailField()
     subject = CharField()
     message = CharField(widget=Textarea)
+
+    def send_mail(self):
+        email = self.cleaned_data['email']
+        sender = "{name} <{email}>".format(name=self.cleaned_data['name'], email=email)
+
+        #TODO: use the actual lancie address here
+        message = EmailMessage(self.cleaned_data['subject'], self.cleaned_data['message'],
+            sender, [settings.EMAIL_CONTACT_DESTINATION], headers = {'Reply-To': email})
+        message.send()
 
 
 class RegisterForm(Form):

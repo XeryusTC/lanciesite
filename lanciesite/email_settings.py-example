@@ -1,0 +1,14 @@
+# USAGE: rename this file to 'email_settings.py' (without the quotes) and
+# fill in your details. Make sure that access to this file is limited as it
+# contains important information
+
+
+# These are according to the django documentation
+EMAIL_HOST = ""
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+EMAIL_USE_TLS = True
+
+# The email addresss where the contact email should be send to (i.e. the lancie address)
+EMAIL_CONTACT_DESTINATION = ""

@@ -1,7 +1,7 @@
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic import TemplateView, FormView
 
 from pubsite.forms import ContactForm, RegisterForm
 
@@ -17,6 +17,13 @@ class ContactView(FormView):
     template_name = "pubsite/contact.html"
     form_class = ContactForm
     success_url = reverse_lazy('pub:thanks')
+
+    def form_valid(self, form):
+        try:
+            form.send_mail()
+        except:
+            return HttpResponseRedirect(reverse('pub:contact'))
+        return super(ContactView, self).form_valid(form)
 
 
 class IndexView(TemplateView):
