@@ -10,9 +10,9 @@ The contact form sends an email to the administrator (or any address you want).
 Because of this you have to set up django to the appropriate mail provider.
 This can either be done in the global django settings or by a small file in the
 lanciesite sub-folder. In case the email settings are in the global django
-settings then line 13 needs to be removed from `lanciesite/settings.py`, this
-line imports the local configuration. If you want to use this local
-configuration instead then you should rename
+settings then you don't need to do anything as it should work out of the box.
+If you want to use the local configuration instead then you need to uncomment
+line 13 in `lanciesite/settings.py` and rename
 `lanciesite/email_settings.py-example` to `lanciesite/email_settings.py` and
 fill  in the details. Most of these are explained at
 http://docs.djangoproject.com/en/1.6/ref/settings/ with the exception of the
