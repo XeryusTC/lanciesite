@@ -35,9 +35,20 @@ class Participant(models.Model):
 	event = models.ForeignKey(Event)
 
 	def get_price(self):
-		# TODO: calculate price of participation
-		return 20
+		return get_price(self.friday, self.saturday, self.sunday, self.transport)
 	get_price.short_description = "Price"
 
 	def __str__(self):
 		return "{} ({})".format(self.user.get_full_name(), self.event.name)
+
+def get_price(friday, saturday, sunday, transport):
+	price = 20
+	# only present one or two days
+	if not (friday and saturday and sunday):
+		price = 14
+	# not present any of the days/no entry fee (BHV for example don't pay an entry fee)
+	if not friday and not saturday and not sunday:
+		price = 0
+	if transport:
+		price += 5
+	return price

@@ -9,4 +9,5 @@ urlpatterns = patterns('views',
     url(r'^contact/thanks/$', views.ThanksView.as_view(), name='thanks'),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
     url(r'^register/complete/$', views.CompleteView.as_view(), name='complete'),
+    url(r'^price/(?P<friday>\d+)/(?P<saturday>\d+)/(?P<sunday>\d+)/(?P<transport>\d+)/$', views.PriceJSONView.as_view(), name='price'),
 )

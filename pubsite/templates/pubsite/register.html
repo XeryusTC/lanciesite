@@ -1,4 +1,10 @@
 {% extends 'pubsite/base.html' %}
+{% load staticfiles %}
+
+{% block scripts %}
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{% static 'pubsite/register.js' %}"></script>
+{% endblock scripts %}
 
 {% block page %}
 Register
@@ -7,6 +13,10 @@ Register
 <table>
     {% csrf_token %}
     {{ form.as_table }}
+<tr>
+    <th>Price</th>
+    <td id="price">&euro; 0,-</td>
+</tr>
 <tr>
     <td></td>
     <td><input type="submit" value="Register" /></td>
