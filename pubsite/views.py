@@ -1,11 +1,12 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
-import json
+import json, string, random
 
 from pubsite.forms import ContactForm, RegisterForm
-from pubsite.models import get_price
+from pubsite.models import get_price, Participant, Event
 
 class AboutView(TemplateView):
     template_name = "pubsite/about.html"
@@ -41,6 +42,28 @@ class RegisterView(FormView):
     template_name = "pubsite/register.html"
     form_class = RegisterForm
     success_url = reverse_lazy('pub:complete')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        # Generate random username consisting of the first 8 letters of the last name + 8 random characters
+        username = data['last_name'][:8] + ''.join(random.sample(string.ascii_letters + string.digits, 8))
+        # Create the contrib.auth User
+        u = User.objects.create_user(username, data['email'], username) # use the username as the password
+        u.first_name = data['first_name']
+        u.last_name = data['last_name']
+        u.save()
+        # Create the participant using the latest event
+        e = Event.objects.all()[0]
+        p = Participant(user=u, address=data['address'],
+            postal_code=data['postal_code'], city=data['city'],
+            telephone=data['phone_number'], iban=data['iban'],
+            transport=data['transport'], friday=data['friday'],
+            saturday=data['saturday'], sunday=data['sunday'], event=e)
+        p.save()
+        # TODO: create pointofsale account
+        # TODO: create debit forms (or possibly create these from a page in pointofsale)
+
+        return super(RegisterView, self).form_valid(form)
 
 
 class ThanksView(TemplateView):
