@@ -16,6 +16,9 @@ class Event(models.Model):
 	def __str__(self):
 		return self.name
 
+	class Meta:
+		ordering = ["-start_date"]
+
 
 class Participant(models.Model):
 	user = models.OneToOneField(User)

@@ -6,7 +6,7 @@ class EventAdmin(admin.ModelAdmin):
         (None, {'fields': ['name', 'registration_deadline']}),
         ('Weekend', {'fields': ['start_date', 'end_date']}),
     ]
-    list_display = ('name', 'registration_deadline', 'get_total_registrations')
+    list_display = ('name', 'start_date', 'end_date', 'registration_deadline', 'get_total_registrations')
     search_fields = ['name']
 
 admin.site.register(Event, EventAdmin)

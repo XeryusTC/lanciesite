@@ -21,6 +21,7 @@ class ContactView(FormView):
     success_url = reverse_lazy('pub:thanks')
 
     def form_valid(self, form):
+        # TODO: display an error message to the user
         try:
             form.send_mail()
         except:
