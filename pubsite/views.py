@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
@@ -21,11 +22,11 @@ class ContactView(FormView):
     success_url = reverse_lazy('pub:thanks')
 
     def form_valid(self, form):
-        # TODO: display an error message to the user
         try:
             form.send_mail()
         except:
-            return HttpResponseRedirect(reverse('pub:contact'))
+            form.errors[NON_FIELD_ERRORS] = form.error_class(['Could not send the email, please try again later'])
+            return super(ContactView, self).form_invalid(form)
         return super(ContactView, self).form_valid(form)
 
 
