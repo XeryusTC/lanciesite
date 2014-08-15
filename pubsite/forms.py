@@ -29,7 +29,7 @@ class RegisterForm(Form):
     postal_code =  CharField(max_length=6, min_length=6)
     city =         CharField()
     phone_number = CharField(max_length=15)
-    iban =         CharField(min_length=15, max_length=44, label="IBAN")
+    iban =         CharField(min_length=15, label="IBAN")
     email =        EmailField()
 
     friday = BooleanField(required=False)

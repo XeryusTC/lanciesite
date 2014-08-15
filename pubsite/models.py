@@ -27,7 +27,7 @@ class Participant(models.Model):
 	postal_code = models.CharField(max_length=6)
 	city = models.CharField(max_length=255)
 	telephone = models.CharField(max_length=15)
-	iban = models.CharField(max_length=16)
+	iban = models.CharField(max_length=255)
 	iban.verbose_name = "IBAN"
 
 	transport = models.BooleanField(default=False)
