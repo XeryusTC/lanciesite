@@ -43,7 +43,7 @@ class Account(models.Model):
     get_credits_remaining.short_description = "Credits remaining"
 
     def __str__(self):
-        return self.participant.user.get_full_name()
+        return self.participant.__str__()
 
 
 class DrinkOrder(models.Model):
