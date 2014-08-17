@@ -2,9 +2,7 @@
 
 {% block navbar-contact %}<li class="active"><a href="/contact">Contact</a></li>{% endblock navbar-contact %}
 
-{% block page %}
-Contact
-<br />
+{% block content %}
 <form action="" method="post">
 <table>
     {% csrf_token %}
@@ -15,4 +13,4 @@ Contact
 </tr>
 </table>
 </form>
-{% endblock page %}
+{% endblock content %}

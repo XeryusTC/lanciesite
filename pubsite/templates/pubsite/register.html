@@ -8,9 +8,7 @@
 <script src="{% static 'pubsite/register.js' %}"></script>
 {% endblock scripts %}
 
-{% block page %}
-Register
-<br />
+{% block content %}
 <form action="" method="post">
 <table>
     {% csrf_token %}
@@ -25,4 +23,4 @@ Register
 </tr>
 </table>
 </form>
-{% endblock page %}
+{% endblock content %}
