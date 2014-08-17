@@ -7,16 +7,17 @@
 
 {% block title %}LanCie{# TODO: make title dynamic based on the current event #}{% endblock title %}
 
-{% block content %}
-<div id="menu">
-    <a href="/">Home</a>
-    <a href="/register">Register</a>
-    <a href="/checklist">Checlist</a>
-    <a href="/about">About</a>
-    <a href="/contact">Contact</a>
-    {% block menu %}&nbsp;{% endblock menu %}
-</div>
+{% block navbar %}
+<ul>
+{% block navbar-home %}<li><a href="/">Home</a></li>{% endblock navbar-home %}
+{% block navbar-register %}<li><a href="/register">Register</a></li>{% endblock navbar-register %}
+{% block navbar-checklist %}<li><a href="/checklist">Checlist</a></li>{% endblock navbar-checklist %}
+{% block navbar-about %}<li><a href="/about">About</a></li>{% endblock navbar-about %}
+{% block navbar-contact %}<li><a href="/contact">Contact</a></li>{% endblock navbar-contact %}
+</ul>
+{% endblock navbar %}
 
+{% block content %}
 <div id="page">
     {% block page %}{% endblock page %}
 </div>

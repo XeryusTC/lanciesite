@@ -3,6 +3,7 @@
 
 <html>
 <head>
+    <link href="{% static 'lanciesite/style.css' %}" rel="stylesheet" type="text/css" />
     {% block css %}{% endblock css %}
     {% block scripts %}{% endblock scripts %}
     <title>{% block title %}You shouldn't see this title{% endblock title %}</title>
@@ -10,6 +11,8 @@
 <body>
 
 <div id="header">{% block header %}{% endblock header %}</div>
+
+<div id="navbar">{% block navbar %}{% endblock navbar %}</div>
 
 <div id="content">{% block content %}You shouldn't see this text{% endblock content %}</div>
 
