@@ -39,8 +39,8 @@ class RegisterForm(Form):
 
     def clean_postal_code(self):
         data = self.cleaned_data['postal_code']
-        if not data[:4].isalpha() or not data[4:].isdigit():
-            raise ValidationError("A postal code should be formatted XXXXYY where X is a letter and Y is a number")
+        if not data[:4].isdigit() or not data[4:].isalpha():
+            raise ValidationError("A postal code should be formatted XXXXYY where X is a number and Y is a letter")
 
         return data
 
