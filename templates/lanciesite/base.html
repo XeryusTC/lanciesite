@@ -14,7 +14,21 @@
 
 <div id="navbar">{% block navbar %}{% endblock navbar %}</div>
 
-<div id="content">{% block content %}You shouldn't see this text{% endblock content %}</div>
+<div id="container" class="clearfloat">&nbsp;{%block container %}
+    <div id="leftmenu" class="column sidemenu">
+        {%block leftmenu %}
+        <div class="menuitem">
+            <div class="menuheader">Example</div>
+            <div class="menucontent">
+                Example text<br />
+                <a href="/test">This is an example link</a><br />
+                Please override this example in sub-templates.
+            </div>
+        </div>
+        {% endblock leftmenu %}
+    </div>
+    <div id="content" class="column">{% block content %}You shouldn't see this text{% endblock content %}</div>
+{%endblock container %}</div>
 
 <div id="footer">{% block footer %}{% endblock footer %}</div>
 
