@@ -5,7 +5,9 @@
     <link href="{% static 'pubsite/style.css' %}" rel="stylesheet" type="text/css" />
 {% endblock css %}
 
-{% block title %}LanCie{# TODO: make title dynamic based on the current event #}{% endblock title %}
+{% block title %}{{ event_title }} - LanCie{% endblock title %}
+
+{% block header %}{{ event_title }}{% endblock header %}
 
 {% block navbar %}
 <ul>
@@ -17,6 +19,30 @@
 </ul>
 {% endblock navbar %}
 
-{% block leftmenu %}{% endblock leftmenu %}
+{% block leftmenu %}
+<div class="menuitem">
+    <div class="menuheader">Current event</div>
+    <div class="menucontent">
+        {% if current_event %}
+            <a href="{% url 'pub:register' %}">{{ current_event }}</a>
+        {% else %}
+            There is currently no event planned. Please check back later
+        {% endif %}
+    </div>
+</div>
+<div class="menuitem">
+    <div class="menuheader">Past events
+    </div>
+    <div class="menucontent">
+        <ul class="past_events">
+            {% for event in past_events %}
+                <li>{{ event }}</li>
+            {% empty %}
+                <li>There are no registered events yet</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock leftmenu %}
 
 {% block content %}{% endblock content %}

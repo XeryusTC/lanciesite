@@ -3,20 +3,35 @@ from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
-import json
+from django.views.generic.base import ContextMixin
+import json, datetime
 
 from pubsite.forms import ContactForm, RegisterForm
-from pubsite.models import get_price
+from pubsite.models import get_price, Event
 
-class AboutView(TemplateView):
+class EventTitleMixin(ContextMixin):
+    def get_context_data(self, **kwargs):
+        context = super(EventTitleMixin, self).get_context_data(**kwargs)
+        event = Event.objects.all()[0]
+        context['event_title'] = event
+
+        if event.end_date < datetime.date.today(): # the last event has already passed
+            context['current_event'] = None
+            context['past_events'] = Event.objects.all()[:5]
+        else:
+            context['current_event'] = event
+            context['past_events'] = Event.objects.all()[1:6]
+        return context
+
+class AboutView(EventTitleMixin, TemplateView):
     template_name = "pubsite/about.html"
 
 
-class CompleteView(TemplateView):
+class CompleteView(EventTitleMixin, TemplateView):
     template_name = "pubsite/complete.html"
 
 
-class ContactView(FormView):
+class ContactView(EventTitleMixin, FormView):
     template_name = "pubsite/contact.html"
     form_class = ContactForm
     success_url = reverse_lazy('pub:thanks')
@@ -30,15 +45,15 @@ class ContactView(FormView):
         return super(ContactView, self).form_valid(form)
 
 
-class IndexView(TemplateView):
+class IndexView(EventTitleMixin, TemplateView):
     template_name = "pubsite/index.html"
 
 
-class CheckListView(TemplateView):
+class CheckListView(EventTitleMixin, TemplateView):
     template_name = "pubsite/checklist.html"
 
 
-class RegisterView(FormView):
+class RegisterView(EventTitleMixin, FormView):
     template_name = "pubsite/register.html"
     form_class = RegisterForm
     success_url = reverse_lazy('pub:complete')
@@ -51,7 +66,7 @@ class RegisterView(FormView):
         return super(RegisterView, self).form_valid(form)
 
 
-class ThanksView(TemplateView):
+class ThanksView(EventTitleMixin, TemplateView):
     template_name = "pubsite/thanks.html"
 
 

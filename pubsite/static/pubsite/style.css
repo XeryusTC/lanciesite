@@ -1,1 +1,9 @@
+ul.past_events {
+    list-style: none outside none;
+    margin: 0px;
+    padding: 0px;
+}
 
+ul.past_events li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
