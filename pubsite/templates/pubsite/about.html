@@ -1,5 +1,5 @@
 {% extends 'pubsite/base.html' %}
 
-{% block navbar-about %}<li class="active"><a href="/about">About</a></li>{% endblock navbar-about %}
+{% block navbar-about %}<li class="active"><a href="{% url 'pub:about' %}">About</a></li>{% endblock navbar-about %}
 
 {% block content %}About{% endblock content %}

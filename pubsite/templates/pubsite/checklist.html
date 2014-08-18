@@ -1,5 +1,5 @@
 {% extends 'pubsite/base.html' %}
 
-{% block navbar-checklist %}<li class="active"><a href="/checklist">Checklist</a></li>{% endblock navbar-checklist %}
+{% block navbar-checklist %}<li class="active"><a href="{% url 'pub:checklist' %}">Checklist</a></li>{% endblock navbar-checklist %}
 
 {% block content %}Checklist{% endblock content %}

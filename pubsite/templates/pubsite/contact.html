@@ -1,6 +1,6 @@
 {% extends 'pubsite/base.html' %}
 
-{% block navbar-contact %}<li class="active"><a href="/contact">Contact</a></li>{% endblock navbar-contact %}
+{% block navbar-contact %}<li class="active"><a href="{% url 'pub:contact' %}">Contact</a></li>{% endblock navbar-contact %}
 
 {% block content %}
 <form action="" method="post">
