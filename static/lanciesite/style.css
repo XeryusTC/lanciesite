@@ -50,6 +50,21 @@ a:hover {
 }
 
 /******************/
+/*     HEADER     */
+/******************/
+
+#header {
+    font-size: 3em;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px black;
+}
+
+#header img.header_logo {
+    padding: 0px 20px;
+    vertical-align: middle;
+}
+
+/******************/
 /* NAVIGATION BAR */
 /******************/
 

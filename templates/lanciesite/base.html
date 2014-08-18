@@ -10,7 +10,10 @@
 </head>
 <body>
 
-<div id="header">{% block header %}{% endblock header %}</div>
+<div id="header">
+    <img class="header_logo" src="{% static 'lanciesite/LanCie.png' %}" />
+    {% block header %}LanCie{% endblock header %}
+</div>
 
 <div id="navbar">{% block navbar %}{% endblock navbar %}</div>
 
