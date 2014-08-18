@@ -12,5 +12,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^base_style.css$', BaseStyleView.as_view(), name="base_style"),
+    url(r'^pos/', include('pointofsale.urls', namespace="pos")),
     url(r'^', include('pubsite.urls', namespace="pub")),
 )
