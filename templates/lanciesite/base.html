@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <link href="{% static 'lanciesite/style.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% url 'base_style' %}" rel="stylesheet" type="text/css" />
     {% block css %}{% endblock css %}
     {% block scripts %}{% endblock scripts %}
     <title>{% block title %}You shouldn't see this title{% endblock title %}</title>
