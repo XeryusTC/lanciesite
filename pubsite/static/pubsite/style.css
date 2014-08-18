@@ -7,3 +7,16 @@ ul.past_events {
 ul.past_events li {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
+
+ul.checklist {
+    list-style: square;
+}
+
+ul.members {
+    font-weight: bold;
+    list-style: none;
+}
+
+ul.members i {
+    font-weight: normal;
+}

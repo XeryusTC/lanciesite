@@ -9,18 +9,20 @@
 {% endblock scripts %}
 
 {% block content %}
-<form action="" method="post">
-<table>
-    {% csrf_token %}
-    {{ form.as_table }}
-<tr>
-    <th>Price</th>
-    <td id="price">&euro; 0,-</td>
-</tr>
-<tr>
-    <td></td>
-    <td><input type="submit" value="Register" /></td>
-</tr>
-</table>
-</form>
+<div class="messagebox">
+    <form action="" method="post">
+    <table>
+        {% csrf_token %}
+        {{ form.as_table }}
+    <tr>
+        <th>Price</th>
+        <td id="price">&euro; 0,-</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Register" /></td>
+    </tr>
+    </table>
+    </form>
+</div>
 {% endblock content %}

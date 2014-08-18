@@ -2,4 +2,19 @@
 
 {% block navbar-checklist %}<li class="active"><a href="{% url 'pub:checklist' %}">Checklist</a></li>{% endblock navbar-checklist %}
 
-{% block content %}Checklist{% endblock content %}
+{% block content %}
+<h1>Things to bring with you:</h1>
+<div class="messagebox">
+    <ul class="checklist">
+        <li>Your computer/laptop</li>
+        <li>LAN cable(s)</li>
+        <li>Headphones. Speakers are not allowed</li>
+        <li>A power strip with enough sockets for your hardware</li>
+        <li>Other cables to connect your devices</li>
+        <li>Peripherals like your mouse and keyboard</li>
+        <li>A mouse pad</li>
+        <li>Computer games</li>
+        <li>OS and drivers, in case your computer crashes</li>
+    </ul>
+</div>
+{% endblock content %}

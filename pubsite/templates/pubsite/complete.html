@@ -2,4 +2,9 @@
 
 {% block navbar-register %}<li class="active"><a href="{% url 'pub:register' %}">Register</a></li>{% endblock navbar-register %}
 
-{% block content %}Registration complete{% endblock content %}
+{% block content %}
+<div class="messagebox">
+    You are registered for {{ event }}. You should receive a confirmation email
+    at the address you entered shortly.
+</div>
+{% endblock content %}
