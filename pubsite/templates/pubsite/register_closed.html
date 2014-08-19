@@ -1,0 +1,10 @@
+{% extends 'pubsite/base.html' %}
+{% load staticfiles %}
+
+{% block navbar-register %}<li class="active"><a href="{% url 'pub:register' %}">Register</a></li>{% endblock navbar-register %}
+
+{% block content %}
+<div class="messagebox">
+    Unfortunately registration is currently closed.
+</div>
+{% endblock content %}

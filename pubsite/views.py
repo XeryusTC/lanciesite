@@ -57,6 +57,14 @@ class RegisterView(EventTitleMixin, FormView):
     template_name = "pubsite/register.html"
     form_class = RegisterForm
     success_url = reverse_lazy('pub:complete')
+    override = False
+
+    def get(self, request, *args, **kwargs):
+        event = Event.objects.all()[0]
+        # check if registration deadline has passed
+        if not self.override and event.registration_deadline < datetime.datetime.now(datetime.timezone.utc):
+            self.template_name = "pubsite/register_closed.html"
+        return super(RegisterView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.register()
