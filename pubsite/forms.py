@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from django.forms import Form, CharField, EmailField, BooleanField, Textarea, ValidationError
+from django.forms import Form, CharField, EmailField, BooleanField, Textarea, ValidationError, IntegerField
 
 import string, random
-from pubsite.models import Participant, Event
+from pubsite.models import Participant, Event, get_price
 
 class ContactForm(Form):
     name = CharField()
@@ -36,6 +36,9 @@ class RegisterForm(Form):
     saturday = BooleanField(required=False)
     sunday = BooleanField(required=False)
     transport = BooleanField(label="Transport service", required=False)
+    cover_member = BooleanField(label="Member of cover", required=False)
+    pcs = IntegerField(initial=1, label="Amount of PCs or laptops")
+    comment = CharField(widget=Textarea, required=False)
 
     def clean_postal_code(self):
         data = self.cleaned_data['postal_code']
@@ -83,7 +86,35 @@ class RegisterForm(Form):
             postal_code=data['postal_code'], city=data['city'],
             telephone=data['phone_number'], iban=data['iban'],
             transport=data['transport'], friday=data['friday'],
-            saturday=data['saturday'], sunday=data['sunday'], event=e)
+            saturday=data['saturday'], sunday=data['sunday'], event=e,
+            price=get_price(data['friday'], data['saturday'], data['sunday'], data['transport'], data['cover_member']),
+            comment=data['comment'], pcs=data['pcs'])
         p.save()
         # TODO: send registration email
         return u
+
+    def send_confirmation_mail(self):
+        data = self.cleaned_data
+        event = Event.objects.all()[0]
+
+        with open("pubsite/templates/pubsite/confirmation_mail.html") as fin:
+            data_dict = {'event': event.name,
+            'price': get_price(data['friday'], data['saturday'], data['sunday'], data['transport'], data['cover_member'])}
+            data_dict.update(data)
+            data_dict['friday'] = self.bool_to_human(data['friday'])
+            data_dict['saturday'] = self.bool_to_human(data['saturday'])
+            data_dict['sunday'] = self.bool_to_human(data['sunday'])
+            data_dict['transport'] = self.bool_to_human(data['transport'])
+            data_dict['cover_member'] = self.bool_to_human(data['cover_member']) # TODO: update this when updating model
+
+            template = fin.read()
+            message = string.Template(template)
+            sender = "LanCie <" + settings.EMAIL_CONTACT_DESTINATION + ">"
+            email = EmailMessage("{} registration".format(event), message.substitute(data_dict),
+            sender, [data['email']], [sender])
+            email.send()
+
+    def bool_to_human(self, b):
+        if b:
+            return "Yes"
+        return "No"

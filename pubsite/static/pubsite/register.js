@@ -4,7 +4,8 @@ $(document).ready(function() {
         saturday = bool_to_int($("#id_saturday").prop("checked"));
         sunday = bool_to_int($("#id_sunday").prop("checked"));
         transport = bool_to_int($("#id_transport").prop("checked"));
-        url = "/price/" + friday + "/" + saturday + "/" + sunday + "/" + transport + "/";
+        member = bool_to_int($("#id_cover_member").prop("checked"));
+        url = "/price/" + friday + "/" + saturday + "/" + sunday + "/" + transport + "/" + member + "/";
         $.getJSON(url, function(data) {
             $("#price").html("&euro; " + data['price'] + ",-");
         });

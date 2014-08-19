@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from django.views.generic.base import ContextMixin
-import json, datetime
+import json, datetime, smtplib
 
 from pubsite.forms import ContactForm, RegisterForm
 from pubsite.models import get_price, Event
@@ -60,6 +60,11 @@ class RegisterView(EventTitleMixin, FormView):
 
     def form_valid(self, form):
         form.register()
+        try:
+            form.send_confirmation_mail()
+        except smtplib.SMTPException:
+            form.errors[NON_FIELD_ERRORS] = form.error_class(["Could not send confirmation email but you should be registered. When in doubt please send a mail to lancie@svcover.nl"])
+            return super(RegisterView, self).form_invalid(form)
         # TODO: create pointofsale account
         # TODO: create debit forms (or possibly create these from a page in pointofsale)
 
@@ -98,13 +103,14 @@ class PriceJSONView(JSONResponseMixin, TemplateView):
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
 
-    def get(self, request, friday, saturday, sunday, transport, *args, **kwargs):
+    def get(self, request, friday, saturday, sunday, transport, member, *args, **kwargs):
         friday = self.var_to_boolean(friday)
         saturday = self.var_to_boolean(saturday)
         sunday = self.var_to_boolean(sunday)
         transport =  self.var_to_boolean(transport)
+        member = self.var_to_boolean(member)
 
-        return self.render_to_json_response({'price': get_price(friday, saturday, sunday, transport)})
+        return self.render_to_json_response({'price': get_price(friday, saturday, sunday, transport, member)})
 
     def var_to_boolean(self, var):
         """

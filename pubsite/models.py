@@ -4,54 +4,62 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Event(models.Model):
-	name = models.CharField(max_length=255)
-	start_date = models.DateField()
-	end_date = models.DateField()
-	registration_deadline = models.DateTimeField()
+    name = models.CharField(max_length=255)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    registration_deadline = models.DateTimeField()
 
-	def get_total_registrations(self):
-		return self.participant_set.count()
-	get_total_registrations.short_description = "Total registrations"
+    def get_total_registrations(self):
+        return self.participant_set.count()
+    get_total_registrations.short_description = "Total registrations"
 
-	def __str__(self):
-		return self.name
+    def __str__(self):
+        return self.name
 
-	class Meta:
-		ordering = ["-start_date"]
+    class Meta:
+        ordering = ["-start_date"]
 
 
 class Participant(models.Model):
-	user = models.OneToOneField(User)
+    user = models.OneToOneField(User)
 
-	address = models.CharField(max_length=255)
-	postal_code = models.CharField(max_length=6)
-	city = models.CharField(max_length=255)
-	telephone = models.CharField(max_length=15)
-	iban = models.CharField(max_length=255)
-	iban.verbose_name = "IBAN"
+    address = models.CharField(max_length=255)
+    postal_code = models.CharField(max_length=6)
+    city = models.CharField(max_length=255)
+    telephone = models.CharField(max_length=15)
+    iban = models.CharField(max_length=255)
+    iban.verbose_name = "IBAN"
 
-	transport = models.BooleanField(default=False)
-	friday = models.BooleanField(default=True)
-	saturday = models.BooleanField(default=True)
-	sunday = models.BooleanField(default=True)
+    # The following affect the price
+    transport = models.BooleanField(default=False)
+    friday = models.BooleanField(default=True)
+    saturday = models.BooleanField(default=True)
+    sunday = models.BooleanField(default=True)
+    cover_member = models.BooleanField(default=True)
+    price = models.SmallIntegerField()
 
-	event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event)
+    pcs = models.SmallIntegerField(default=1)
+    comment = models.TextField(default="")
 
-	def get_price(self):
-		return get_price(self.friday, self.saturday, self.sunday, self.transport)
-	get_price.short_description = "Price"
 
-	def __str__(self):
-		return "{} ({})".format(self.user.get_full_name(), self.event.name)
+    def get_price(self):
+        return get_price(self.friday, self.saturday, self.sunday, self.transport)
+    get_price.short_description = "Price"
 
-def get_price(friday, saturday, sunday, transport):
-	price = 20
-	# only present one or two days
-	if not (friday and saturday and sunday):
-		price = 14
-	# not present any of the days/no entry fee (BHV for example don't pay an entry fee)
-	if not friday and not saturday and not sunday:
-		price = 0
-	if transport:
-		price += 5
-	return price
+    def __str__(self):
+        return "{} ({})".format(self.user.get_full_name(), self.event.name)
+
+def get_price(friday, saturday, sunday, transport, member):
+    price = 20
+    # only present one or two days
+    if not (friday and saturday and sunday):
+        price = 14
+    # not present any of the days/no entry fee (BHV for example don't pay an entry fee)
+    if not friday and not saturday and not sunday:
+        price = 0
+    if transport:
+        price += 5
+    if not member:
+        price += 5
+    return price
