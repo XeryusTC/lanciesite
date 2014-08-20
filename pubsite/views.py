@@ -12,8 +12,12 @@ from pubsite.models import get_price, Event
 class EventTitleMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super(EventTitleMixin, self).get_context_data(**kwargs)
-        event = Event.objects.all()[0]
-        context['event_title'] = event
+        try:
+            event = Event.objects.all()[0]
+            context['event_title'] = event.name
+        except IndexError: # There are no events configured
+            context['event_title'] = "There is no LANparty planned yet"
+            return context
 
         if event.end_date < datetime.date.today(): # the last event has already passed
             context['current_event'] = None
@@ -60,10 +64,14 @@ class RegisterView(EventTitleMixin, FormView):
     override = False
 
     def get(self, request, *args, **kwargs):
-        event = Event.objects.all()[0]
-        # check if registration deadline has passed
-        if not self.override and event.registration_deadline < datetime.datetime.now(datetime.timezone.utc):
+        try:
+            event = Event.objects.all()[0]
+        except: # There are no events yet
             self.template_name = "pubsite/register_closed.html"
+        else:
+            # check if registration deadline has passed
+            if not self.override and event.registration_deadline < datetime.datetime.now(datetime.timezone.utc):
+                self.template_name = "pubsite/register_closed.html"
         return super(RegisterView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
