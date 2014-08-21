@@ -44,7 +44,7 @@ class Participant(models.Model):
 
 
     def get_price(self):
-        return get_price(self.friday, self.saturday, self.sunday, self.transport)
+        return get_price(self.friday, self.saturday, self.sunday, self.transport, self.cover_member)
     get_price.short_description = "Price"
 
     def __str__(self):
