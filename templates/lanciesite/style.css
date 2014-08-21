@@ -126,11 +126,19 @@ div.messagebox a {
 /*    SIDE MENU   */
 /******************/
 
-.sidemenu {
+#leftmenu {
     margin-left: -100%;
-    width: {{ left_menu_width }}px;
-    padding: {{ column_padding }}px;
     right: {{ left_column_width }}px;
+    width: {{ left_menu_width }}px;
+}
+
+#rightmenu {
+    margin-right: -{{ right_column_width }}px;
+    width: {{ right_menu_width }}px;
+}
+
+.sidemenu {
+    padding: {{ column_padding }}px;
     position: relative;
 }
 

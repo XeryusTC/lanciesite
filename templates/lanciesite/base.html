@@ -18,9 +18,13 @@
 <div id="navbar">{% block navbar %}{% endblock navbar %}</div>
 
 <div id="container" class="clearfloat">&nbsp;{%block container %}
-    <div id="content" class="column">{% block content %}You shouldn't see this text{% endblock content %}</div>
+    <div id="content" class="column">
+        {% block content %}
+            <div class="messagebox">You shouldn't see this text</div>
+        {% endblock content %}
+    </div>
     <div id="leftmenu" class="column sidemenu">
-        {%block leftmenu %}
+        {% block leftmenu %}
         <div class="menuitem">
             <div class="menuheader">Example</div>
             <div class="menucontent">
@@ -30,6 +34,14 @@
             </div>
         </div>
         {% endblock leftmenu %}
+    </div>
+    <div id="rightmenu" class="column sidemenu">
+        {% block rightmenu %}
+        <div class="menuitem">
+            <div class="menuheader">Right example</div>
+            <div class="menucontent">This is an example on the other side of the screen.</div>
+        </div>
+        {% endblock rightmenu %}
     </div>
 {%endblock container %}</div>
 
