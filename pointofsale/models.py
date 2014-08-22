@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from pubsite.models import Participant
 from django.core.urlresolvers import reverse
+
+from pubsite.models import Participant, Event
 
 class Drink(models.Model):
     name = models.CharField(max_length=32)
@@ -19,6 +20,7 @@ class Account(models.Model):
     participant = models.OneToOneField(Participant)
 
     credits = models.IntegerField(default=0)
+    debit_id = models.SmallIntegerField(editable=False, default=lambda:get_next_debit_id())
 
     drinks_bought = models.ManyToManyField(Drink, through='DrinkOrder')
 
@@ -58,3 +60,19 @@ class DrinkOrder(models.Model):
 
     def __str__(self):
         return "[{1}] {2} - {0}".format(self.account, self.time, self.drink)
+
+
+def get_next_debit_id():
+    try:
+        e = Event.objects.all()[0]
+    except IndexError:
+        # There is no event, but return a (semi-)useful value for the debit form anyway
+        return 1
+
+    try:
+        a = Account.objects.filter(participant__event=e).order_by("-debit_id")[0]
+        return a.debit_id + 1
+    except IndexError:
+        # No account for this event yet, return the first id
+        return 1
+

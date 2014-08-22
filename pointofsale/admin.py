@@ -13,11 +13,11 @@ class AccountAdmin(admin.ModelAdmin):
         (None, {'fields': ('participant', 'credits')}),
         ('Statistics', {
             'classes': ('collapse'),
-            'fields': ('get_drinks_bought', 'get_credits_used_on_drinks', 'get_credits_used', 'get_credits_remaining')
+            'fields': ('get_drinks_bought', 'get_credits_used_on_drinks', 'get_credits_used', 'get_credits_remaining', 'debit_id')
         }),
     )
-    readonly_fields = ('get_drinks_bought', 'get_credits_used_on_drinks', 'get_credits_used', 'get_credits_remaining')
-    list_display = ('__str__', 'credits', 'get_credits_used')
+    readonly_fields = ('get_drinks_bought', 'get_credits_used_on_drinks', 'get_credits_used', 'get_credits_remaining', 'debit_id')
+    list_display = ('__str__', 'credits', 'get_credits_used', 'debit_id')
 
 admin.site.register(Account, AccountAdmin)
 
