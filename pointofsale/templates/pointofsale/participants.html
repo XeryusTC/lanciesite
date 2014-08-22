@@ -5,9 +5,43 @@
 {% block content %}
 <h1>Registration not finished</h1>
 <div class="messagebox">
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        {% for p in not_finished %}
+            <tr>
+                <td>{{ p.user.get_full_name }}</td>
+                <td><a href="">Get forms</a></td>
+                <td><a href="{% url 'pos:add_credits' p.pk %}">Grant credits</a></td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td>There are no participants who do not have an account.</td>
+            </tr>
+        {% endfor %}
+    </table>
 </div>
 
 <h1>Registration finished</h1>
 <div class="messagebox">
+    <table>
+    <tr>
+        <th>Name</th>
+        <th>Credits total</th>
+        <th>Credits used</th>
+        <th>Credits left</th>
+    </tr>
+    {% for p in finished %}
+        <tr>
+            <td>{{ p.user.get_full_name }}</td>
+            <td>{{ p.account.credits }}</td>
+            <td>{{ p.account.get_credits_used }}</td>
+            <td>{{ p.account.get_credits_remaining }}</td>
+            <td><a href="{% url 'pos:add_credits' p.pk %}">Grant extra credits</a></td>
+        </tr>
+    {% endfor %}
+    </table>
 </div>
+
 {% endblock content %}
