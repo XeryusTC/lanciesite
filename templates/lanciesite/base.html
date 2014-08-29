@@ -1,51 +1,102 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <link href="{% url 'base_style' %}" rel="stylesheet" type="text/css" />
-    {% block css %}{% endblock css %}
-    {% block scripts %}{% endblock scripts %}
-    <title>{% block title %}You shouldn't see this title{% endblock title %}</title>
-</head>
-<body>
-
-<div id="header">
-    <img class="header_logo" src="{% static 'lanciesite/LanCie.png' %}" />
-    {% block header %}LanCie{% endblock header %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'lanciesite/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'lanciesite/lancie.css' %}" rel="stylesheet" type="text/css" />
+  {% block css %}{% endblock css %}
+  {% block scripts %}{% endblock scripts %}
+  <title>{% block title %}You shouldn't see this title{% endblock title %}</title>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+  </head>
+  <body>
+      <!-- Header -->
+      <div id="header">
+        <div class="container">
+          <div class="row">
+            <div id="page-title" class="jumbotron col-lg-8">
+              {% block header %}
+              <h1>LAN-TITLE</h1>
+              <p>LAN-DATE</p>
+              <p><a href="#register" class="btn btn-primary btn-lg">Register now!</a></p>
+              {% endblock header %}
+          </div>
+          <div id="page-title-image" class="col-lg-4">
+              <img class="hidden-xs hidden-sm hidden-md" src="{% static 'lanciesite/lancie.css' %}" alt="Stickman" />     
+          </div>
+      </div>
+  </div>
 </div>
+<!-- Header-end -->
 
-<div id="navbar">{% block navbar %}{% endblock navbar %}</div>
 
-<div id="container" class="clearfloat">&nbsp;{%block container %}
-    <div id="content" class="column">
-        {% block content %}
-            <div class="messagebox">You shouldn't see this text</div>
-        {% endblock content %}
-    </div>
-    <div id="leftmenu" class="column sidemenu">
-        {% block leftmenu %}
-        <div class="menuitem">
-            <div class="menuheader">Example</div>
-            <div class="menucontent">
-                Example text<br />
-                <a href="/test">This is an example link</a><br />
-                Please override this example in sub-templates.
-            </div>
+<!-- Navbar -->
+<div class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+  </div>
+  <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        {% block navbar %}
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        {% endblock navbar %}
+    </ul>
+</div><!--/.nav-collapse -->
+</div>
+</div>
+<!-- Navbar-end -->
+
+<!-- Content -->
+<div class="container">{%block container %}
+    <div id="content">{% block content %}
+      <div class="page-header">
+        <h1>
+          LAN party: I LAN no English
+      </h1>
+  </div>
+  <div class="row">
+    <p class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+      The weekend of 23, 24 and 25  May we (The LanCie) will be organizing yet another LAN party for the student association "Cover". If you would like to join us 
+      to an awesome weekend full of online and offline gaming, you can register by clicking the "register now" button, or by navigating too the registration form yourself 
+      through the navigation bar on the top of the page. To get a impression of previous LAN parties, you can watch one or more of the time lapses on this page.
+  </p>
+  <img class="img-rounded col-lg-5 col-md-5 col-sm-5 col-xs-12" src="    https://lancie.svcover.nl/themes/fancy/img/lan_impression_photo.jpg
+  " alt="Lan impression photo" />
+</div><!--/row -->
+{% endblock content %}</div><!--/content -->
+{%endblock container %} </div><!--/container -->
+<!-- Content-end -->
+
+
+    <div id="footer"></div>
+
+        <!-- Footer -->
+        <div class="footer">
+          <div class="container">
+            <p class="text-muted">{% block footer %}Place sticky footer content here.{% endblock footer %}</p>
+          </div>
         </div>
-        {% endblock leftmenu %}
-    </div>
-    <div id="rightmenu" class="column sidemenu">
-        {% block rightmenu %}
-        <div class="menuitem">
-            <div class="menuheader">Right example</div>
-            <div class="menucontent">This is an example on the other side of the screen.</div>
-        </div>
-        {% endblock rightmenu %}
-    </div>
-{%endblock container %}</div>
+        <!-- Footer-end -->
 
-<div id="footer">{% block footer %}{% endblock footer %}</div>
-
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{% static 'lanciesite/bootstrap.min.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,33 @@
+/* Sticky footer
+---------------------------------------------*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+}
+
+.footer p{
+    margin-top: 10px;
+}
+/* Header
+---------------------------------------------*/
+#header {
+    margin-bottom: 0;
+    background-color: #eee;
+}
+
+#page-title-image {
+    padding-left: 0;
+    padding-top: 45px;
+}
