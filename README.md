@@ -1,6 +1,9 @@
 lanciesite
 ==========
-
+CSS
+-----
+The CSS for the new template is created with bootstrap and LESS.
+This project can be found at: https://github.com/IcyPalm/LanCie-css-rebuild
 Setup
 =====
 Email
