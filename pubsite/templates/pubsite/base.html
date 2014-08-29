@@ -1,50 +1,25 @@
 {% extends 'lanciesite/base.html' %}
 {% load staticfiles %}
 
-{% block css %}
-    <link href="{% static 'pubsite/style.css' %}" rel="stylesheet" type="text/css" />
-{% endblock css %}
+{% block css %}{% endblock css %}
 
 {% block title %}{{ event_title }} - LanCie{% endblock title %}
 
 {% block header %}{{ event_title }}{% endblock header %}
 
 {% block navbar %}
-<ul>
 {% block navbar-home %}<li><a href="{% url 'pub:home' %}">Home</a></li>{% endblock navbar-home %}
 {% block navbar-register %}<li><a href="{% url 'pub:register' %}">Register</a></li>{% endblock navbar-register %}
 {% block navbar-checklist %}<li><a href="{% url 'pub:checklist' %}">Checklist</a></li>{% endblock navbar-checklist %}
 {% block navbar-about %}<li><a href="{% url 'pub:about' %}">About</a></li>{% endblock navbar-about %}
 {% block navbar-contact %}<li><a href="{% url 'pub:contact' %}">Contact</a></li>{% endblock navbar-contact %}
-</ul>
 {% endblock navbar %}
 
-{% block leftmenu %}
-<div class="menuitem">
-    <div class="menuheader">Current event</div>
-    <div class="menucontent">
-        {% if current_event %}
-            <a href="{% url 'pub:register' %}">{{ current_event }}</a>
-        {% else %}
-            There is currently no event planned. Please check back later
-        {% endif %}
-    </div>
-</div>
-<div class="menuitem">
-    <div class="menuheader">Past events
-    </div>
-    <div class="menucontent">
-        <ul class="past_events">
-            {% for event in past_events %}
-                <li>{{ event }}</li>
-            {% empty %}
-                <li>There are no registered events yet</li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
-{% endblock leftmenu %}
 
-{% block rightmenu %}{% endblock rightmenu %}
+
 
 {% block content %}{% endblock content %}
+
+
+
+{% block footer %}LanCie{% endblock footer %}
