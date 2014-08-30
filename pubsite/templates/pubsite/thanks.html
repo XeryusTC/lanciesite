@@ -2,4 +2,8 @@
 
 {% block navbar-contact %}<li class="active"><a href="{% url 'pub:contact' %}">Contact</a></li>{% endblock navbar-contact %}
 
-{% block content %}<div class="messagebox">Thanks for leaving a message.</div>{% endblock content %}
+{% block content %}
+
+<div class="alert alert-success" role="alert">Thanks for leaving a message.</div>
+
+{% endblock content %}

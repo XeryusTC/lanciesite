@@ -4,7 +4,7 @@
 {% block navbar-register %}<li class="active"><a href="{% url 'pub:register' %}">Register</a></li>{% endblock navbar-register %}
 
 {% block content %}
-<div class="messagebox">
-    Unfortunately registration is currently closed.
-</div>
+
+<div class="alert alert-info" role="alert">Unfortunately registration is currently closed.</div>
+
 {% endblock content %}

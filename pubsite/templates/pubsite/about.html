@@ -3,19 +3,29 @@
 {% block navbar-about %}<li class="active"><a href="{% url 'pub:about' %}">About</a></li>{% endblock navbar-about %}
 
 {% block content %}
-<div class="messagebox">
-    The LanCie is the committee that organises two LAN parties per year. You can
-    recognise us at the LAN parties by our awesome LanCie clothing. The LanCie
-    consists of:
-    <ul class="members">
-        <li>Guus Klinkenberg<i> - Chairman</i></li>
-        <li>Sytze Tempel<i> - Secretary</i></li>
-        <li>Marijn Pool<i> - Treasurer</i></li>
-        <li>Jeroen Langhorst</li>
-        <li>Jan-Willem Moen</li>
-        <li>Xeryus Stokkel</li>
-        <li>Rob Tierolff</li>
-    </ul>
-    If you got any questions then you can contact us through the <a href="{% url 'pub:contact' %}">contact page</a>.
+<div class="page-header">
+    <h1>About</h1>
 </div>
+
+<p>
+    The page what it's all about ;) We are the LanCie committee at this moment and you can recognize us at the LAN parties by our awesome LanCie Crew clothing.
+</p>
+
+<ul style='list-style: none'>
+    <li><strong>Guus Klinkenberg</strong> - <em>Chairman</em></li>
+    <li><strong>Marijn Pool</strong> - <em>Treasurer</em></li>
+    <li><strong>Sytze Tempel</strong> - <em>Secratary</em></li>
+    <li><strong>Xeryus Stokkel</strong></li>
+    <li><strong>Lan-Willem Moen</strong></li>
+    <li><strong>Rob Tierolff</strong></li>
+    <li><strong>Jeroen Langhorst</strong></li>
+</ul>
+
+<p> 
+    If you got any questions please contact us through the contact page on this website. 
+</p>
+
+<p> 
+    The LanCie 
+</p>
 {% endblock content %}
