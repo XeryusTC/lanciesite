@@ -1,0 +1,16 @@
+{% extends 'pointofsale/base.html' %}
+
+{% block navbar-buy %}<li class="active"><a href="{% url 'pos:buydrink' %}">Buy</a></li>{% endblock %}
+
+{% block leftmenu %}
+{% endblock leftmenu %}
+
+{% block content %}
+<div class="messagebox">
+    <form action="" method="post">
+    <table>
+        {{ form.as_table }}
+    </table>
+    </form>
+</div>
+{% endblock content %}

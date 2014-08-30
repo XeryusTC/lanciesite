@@ -1,0 +1,21 @@
+{% extends 'lanciesite/base.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link href="{% static 'pointofsale/style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block title %}Point of sale{% endblock title %}
+
+{% block navbar %}
+<ul>
+    {% block navbar-buy %}<li><a href="{% url 'pos:buydrink' %}">Buy</a></li>{% endblock %}
+    {% block navbar-participants %}<li><a href="{% url 'pos:participants' %}">Participants</a></li>{% endblock %}
+</ul>
+{% endblock navbar %}
+
+{% block leftmenu %}{% endblock leftmenu %}
+
+{% block rightmenu %}{% endblock rightmenu %}
+
+{% block content %}{% endblock content %}

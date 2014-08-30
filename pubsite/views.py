@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
 from django.views.generic.base import ContextMixin
 import json, datetime, smtplib
@@ -61,7 +63,6 @@ class RegisterView(EventTitleMixin, FormView):
     template_name = "pubsite/register.html"
     form_class = RegisterForm
     success_url = reverse_lazy('pub:complete')
-    override = False
 
     def get(self, request, *args, **kwargs):
         try:
@@ -70,7 +71,7 @@ class RegisterView(EventTitleMixin, FormView):
             self.template_name = "pubsite/register_closed.html"
         else:
             # check if registration deadline has passed
-            if not self.override and event.registration_deadline < datetime.datetime.now(datetime.timezone.utc):
+            if event.registration_deadline < datetime.datetime.now(datetime.timezone.utc):
                 self.template_name = "pubsite/register_closed.html"
         return super(RegisterView, self).get(request, *args, **kwargs)
 
@@ -85,6 +86,20 @@ class RegisterView(EventTitleMixin, FormView):
         # TODO: create debit forms (or possibly create these from a page in pointofsale)
 
         return super(RegisterView, self).form_valid(form)
+
+
+class RegisterOverrideView(RegisterView):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(RegisterOverrideView, self).dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            event = Event.objects.all()[0]
+        except:
+            print
+            self.template_name = "pubsite/register_closed.html"
+        return super(FormView, self).get(request, *args, **kwargs)
 
 
 class ThanksView(EventTitleMixin, TemplateView):

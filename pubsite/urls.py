@@ -8,7 +8,7 @@ urlpatterns = patterns('views',
     url(r'^contact/$', views.ContactView.as_view(), name='contact'),
     url(r'^contact/thanks/$', views.ThanksView.as_view(), name='thanks'),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
-    url(r'^register/override/$', views.RegisterView.as_view(override=True), name='register_override'),
+    url(r'^register/override/$', views.RegisterOverrideView.as_view(), name='register_override'),
     url(r'^register/complete/$', views.CompleteView.as_view(), name='complete'),
     url(r'^price/(?P<friday>\d+)/(?P<saturday>\d+)/(?P<sunday>\d+)/(?P<transport>\d+)/(?P<member>\d+)/$', views.PriceJSONView.as_view(), name='price'),
 )
