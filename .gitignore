@@ -59,3 +59,6 @@ docs/_build/
 
 # settings
 lanciesite/email_settings.py
+
+# Geany project files
+*.geany
