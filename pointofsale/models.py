@@ -58,6 +58,12 @@ class DrinkOrder(models.Model):
         ordering = ["-time"]
         get_latest_by = "time"
 
+    def save(self, *args, **kwargs):
+        # Set the cost to the price of the drink by default
+        if not self.cost:
+            self.cost = self.drink.price
+        super(DrinkOrder, self).save(*args, **kwargs)
+
     def __str__(self):
         return "[{1}] {2} - {0}".format(self.account, self.time, self.drink)
 
