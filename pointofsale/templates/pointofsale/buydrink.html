@@ -6,11 +6,48 @@
 {% endblock leftmenu %}
 
 {% block content %}
-<div class="messagebox">
-    <form action="" method="post">
-    <table>
-        {{ form.as_table }}
-    </table>
-    </form>
+<form action="" method="post">{% csrf_token %}
+{{ form.non_field_errors }}
+
+<div class="messagebox" id="drinks">
+    {{ form.drink.errors }}
+    {% for drink in form.drink %}
+        {% for d in all_drinks %}
+            {% if d.pk|lower == drink.choice_label|lower %}
+                <div class="drink">
+                    <label for="drink_{{ forloop.counter0 }}">{{ drink.name }} ({{ d.price }})</label>
+                    {{ drink.tag }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 </div>
+
+<div class="messagebox" id="drinks">
+    {{ form.account.errors }}
+    <table>
+        <tr>
+            <td></td>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Spend</th>
+            <th>Remaining</th>
+        </tr>
+    {% for account in form.account %}
+        {% for pk, info in all_accounts.items %}
+            {% if pk|lower == account.choice_label|lower %}
+                <tr class="user {% cycle 'row1' 'row2' %}">
+                    <td>{{ account.tag }}</td>
+                    <td><label for="account_{{ forloop.counter1 }}">{{ info.name }}</label></td>
+                    <td><label for="account_{{ forloop.counter1 }}">{{ info.credits }}</label></td>
+                    <td><label for="account_{{ forloop.counter1 }}">{{ info.used }}</label></td>
+                    <td><label for="account_{{ forloop.counter1 }}">{{ info.remaining }}</label></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </table>
+</div>
+
+</form>
 {% endblock content %}

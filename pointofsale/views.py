@@ -20,6 +20,29 @@ class BuyDrinkView(FormView):
     def dispatch(self, *args, **kwargs):
         return super(BuyDrinkView, self).dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(BuyDrinkView, self).get_context_data(**kwargs)
+
+        # get the list of available drinks
+        context['all_drinks'] = Drink.objects.all()
+
+        # get the list of all accounts for the ongoing event, first get the event
+        try:
+            event = Event.objects.all()[0]
+        except:
+            return context
+
+        context['all_accounts'] = {}
+        for a in Account.objects.filter(participant__event=event):
+            if a.get_credits_remaining() > 0:
+                context['all_accounts'][a.pk] = {'credits': a.credits, 'used': a.get_credits_used(),
+                    'remaining': a.get_credits_remaining(), 'name': a.participant.user.get_full_name() }
+
+        # get the drinks that have been bought for the latest event
+        context['log'] = DrinkOrder.objects.filter(account__participant__event=event).order_by('-time')[:10]
+
+        return context
+
 
 class ParticipantOverview(TemplateView):
     template_name = "pointofsale/participants.html"
