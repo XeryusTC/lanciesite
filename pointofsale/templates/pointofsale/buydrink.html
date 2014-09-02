@@ -38,10 +38,10 @@
             {% if pk|lower == account.choice_label|lower %}
                 <tr class="user {% cycle 'row1' 'row2' %}">
                     <td>{{ account.tag }}</td>
-                    <td><label for="account_{{ forloop.counter1 }}">{{ info.name }}</label></td>
-                    <td><label for="account_{{ forloop.counter1 }}">{{ info.credits }}</label></td>
-                    <td><label for="account_{{ forloop.counter1 }}">{{ info.used }}</label></td>
-                    <td><label for="account_{{ forloop.counter1 }}">{{ info.remaining }}</label></td>
+                    <td><label for="account_{{ forloop.counter0 }}">{{ info.name }}</label></td>
+                    <td><label for="account_{{ forloop.counter0 }}">{{ info.credits }}</label></td>
+                    <td><label for="account_{{ forloop.counter0 }}">{{ info.used }}</label></td>
+                    <td><label for="account_{{ forloop.counter0 }}">{{ info.remaining }}</label></td>
                 </tr>
             {% endif %}
         {% endfor %}
