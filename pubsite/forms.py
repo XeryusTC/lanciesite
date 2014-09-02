@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.forms import Form, CharField, EmailField, BooleanField, Textarea, ValidationError, IntegerField
 
 import string, random
-from pubsite.models import Participant, Event, get_price
+from pubsite.models import Participant, get_price, get_current_event
 
 class ContactForm(Form):
     name = CharField()
@@ -81,7 +81,7 @@ class RegisterForm(Form):
         u.last_name = data['last_name']
         u.save()
         # Create the participant using the latest event
-        e = Event.objects.all()[0]
+        e = get_current_event()
         p = Participant(user=u, address=data['address'],
             postal_code=data['postal_code'], city=data['city'],
             telephone=data['phone_number'], iban=data['iban'],
@@ -95,7 +95,7 @@ class RegisterForm(Form):
 
     def send_confirmation_mail(self):
         data = self.cleaned_data
-        event = Event.objects.all()[0]
+        event = get_current_event()
 
         with open("pubsite/templates/pubsite/confirmation_mail.html") as fin:
             data_dict = {'event': event.name,

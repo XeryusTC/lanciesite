@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from pubsite.models import Participant, Event
+from pubsite.models import Participant, get_current_event
 
 class Drink(models.Model):
     name = models.CharField(max_length=32)
@@ -70,7 +70,7 @@ class DrinkOrder(models.Model):
 
 def get_next_debit_id():
     try:
-        e = Event.objects.all()[0]
+        e = get_current_event()
     except IndexError:
         # There is no event, but return a (semi-)useful value for the debit form anyway
         return 1

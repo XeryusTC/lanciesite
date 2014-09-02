@@ -8,7 +8,7 @@ from django.views.generic.edit import FormView
 
 from pointofsale.models import Drink, Account, DrinkOrder
 from pointofsale.forms import BuyDrinkForm
-from pubsite.models import Event, Participant
+from pubsite.models import Participant, get_current_event
 
 
 class BuyDrinkView(FormView):
@@ -28,7 +28,7 @@ class BuyDrinkView(FormView):
 
         # get the list of all accounts for the ongoing event, first get the event
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
         except:
             return context
 
@@ -56,8 +56,7 @@ class ParticipantOverview(TemplateView):
 
         # get the latest event and its participants
         try:
-            e = Event.objects.all()[0]
-            participant_list = Participant.objects.filter(event=e)
+            participant_list = Participant.objects.filter(event=get_current_event())
 
             # sort the participants according to whether they have an account or not
             context['not_finished'] = []

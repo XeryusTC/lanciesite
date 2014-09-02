@@ -50,6 +50,7 @@ class Participant(models.Model):
     def __str__(self):
         return "{} ({})".format(self.user.get_full_name(), self.event.name)
 
+
 def get_price(friday, saturday, sunday, transport, member):
     price = 20
     # only present one or two days
@@ -63,3 +64,6 @@ def get_price(friday, saturday, sunday, transport, member):
     if not member:
         price += 5
     return price
+
+def get_current_event():
+    return Event.objects.all()[0]

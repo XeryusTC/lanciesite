@@ -9,13 +9,13 @@ from django.views.generic.base import ContextMixin
 import json, datetime, smtplib
 
 from pubsite.forms import ContactForm, RegisterForm
-from pubsite.models import get_price, Event
+from pubsite.models import get_price, Event, get_current_event
 
 class EventTitleMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super(EventTitleMixin, self).get_context_data(**kwargs)
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
             context['event_title'] = event.name
         except IndexError: # There are no events configured
             context['event_title'] = "There is no LANparty planned yet"
@@ -66,7 +66,7 @@ class RegisterView(EventTitleMixin, FormView):
 
     def get(self, request, *args, **kwargs):
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
         except: # There are no events yet
             self.template_name = "pubsite/register_closed.html"
         else:
@@ -95,7 +95,7 @@ class RegisterOverrideView(RegisterView):
 
     def get(self, request, *args, **kwargs):
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
         except:
             print
             self.template_name = "pubsite/register_closed.html"
