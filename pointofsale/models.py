@@ -32,7 +32,8 @@ class Account(models.Model):
     get_drinks_bought.short_description = "Total drinks bought"
 
     def get_credits_used_on_drinks(self):
-        return DrinkOrder.objects.filter(account=self).aggregate(total_cost=models.Sum('cost'))['total_cost']
+        used = DrinkOrder.objects.filter(account=self).aggregate(total_cost=models.Sum('cost'))['total_cost']
+        return used if used else 0
     get_credits_used_on_drinks.short_description = "Credits used for drinks"
 
     def get_credits_used(self):
