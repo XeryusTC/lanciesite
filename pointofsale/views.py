@@ -7,7 +7,6 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
 from pointofsale.models import Drink, Account, DrinkOrder
-from pointofsale.forms import BuyDrinkForm
 from pubsite.models import Participant, get_current_event, Event
 
 class BuyDrinkView(TemplateView):
