@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import FormView
 
 from pointofsale.models import Drink, Account, DrinkOrder
@@ -70,6 +70,29 @@ class ParticipantOverview(TemplateView):
         return context
 
 
+class BuyDrinkRedirectView(RedirectView):
+    pattern_name = "pos:sale"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(BuyDrinkRedirectView, self).dispatch(*args, **kwargs)
+
+    def get_redirect_url(self, participant, drink, quantity, *args, **kwargs):
+        try:
+            buy_drink(participant, drink, quantity)
+        except InsufficientFundsException:
+            self.pattern_name = "pos:sale_insufficient"
+        except Account.DoesNotExist:
+            # someone tried to buy something for an account which does not exist
+            # let it slide for now, but TODO: handle this gracefully
+            pass
+        return super(BuyDrinkRedirectView, self).get_redirect_url(*args, **kwargs)
+
+
+class InsufficientFundsException(Exception):
+    pass
+
+
 @login_required
 def add_credits(request, participant):
     p = Participant.objects.get(pk=participant)
@@ -82,23 +105,14 @@ def add_credits(request, participant):
         a.save()
     return HttpResponseRedirect(reverse("pos:participants"))
 
-@login_required
-def buy_drink(request, participant, drink, quantity):
+def buy_drink(participant, drink, quantity):
     p = Participant.objects.get(pk=participant)
     d = Drink.objects.get(pk=drink)
     quantity = int(quantity)
 
-    # Check if there is an actual account, and otherwise return nothing
-    try:
-        p.account
-    except:
-        return HttpResponseRedirect(reverse("pos:sale"))
-
-    # Check if there are enough credits left
     if p.account.get_credits_remaining() < d.price * quantity:
-        return HttpResponseRedirect(reverse("pos:sale_insufficient"))
+        raise InsufficientFundsException()
 
     for i in range(quantity):
         do = DrinkOrder.objects.create(account=p.account, drink=d)
         do.save()
-    return HttpResponseRedirect(reverse("pos:sale"))
