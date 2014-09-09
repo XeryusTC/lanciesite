@@ -24,6 +24,9 @@ class Account(models.Model):
 
     drinks_bought = models.ManyToManyField(Drink, through='DrinkOrder')
 
+    class Meta:
+        ordering = ["participant__event", "participant__user__first_name", "participant__user__last_name"]
+
     def get_absolute_url(self):
         pass
 

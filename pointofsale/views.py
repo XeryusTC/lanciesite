@@ -10,9 +10,8 @@ from pointofsale.models import Drink, Account, DrinkOrder
 from pointofsale.forms import BuyDrinkForm
 from pubsite.models import Participant, get_current_event, Event
 
-class BuyDrinkView(FormView):
+class BuyDrinkView(TemplateView):
     template_name = "pointofsale/buydrink.html"
-    form_class = BuyDrinkForm
     success_url = reverse_lazy("pos:buy_drink")
 
     @method_decorator(login_required)
@@ -22,22 +21,15 @@ class BuyDrinkView(FormView):
     def get_context_data(self, **kwargs):
         context = super(BuyDrinkView, self).get_context_data(**kwargs)
 
-        # get the list of available drinks
-        context['all_drinks'] = Drink.objects.all()
-
-        # get the list of all accounts for the ongoing event, first get the event
+        # get the current event or don't do anything if there is none
         try:
             event = get_current_event()
         except:
             return context
 
-        context['all_accounts'] = {}
-        for a in Account.objects.filter(participant__event=event):
-            if a.get_credits_remaining() > 0:
-                context['all_accounts'][a.pk] = {'credits': a.credits, 'used': a.get_credits_used(),
-                    'remaining': a.get_credits_remaining(), 'name': a.participant.user.get_full_name() }
-
-        # get the drinks that have been bought for the latest event
+        context['drinks'] = Drink.objects.all()
+        context['accounts'] = Account.objects.filter(participant__event=event)
+        # get the last few drinks that have been bought during the event
         context['log'] = DrinkOrder.objects.filter(account__participant__event=event).order_by('-time')[:10]
 
         return context
