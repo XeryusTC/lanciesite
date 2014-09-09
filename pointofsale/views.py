@@ -86,6 +86,7 @@ def add_credits(request, participant):
 def buy_drink(request, participant, drink, quantity):
     p = Participant.objects.get(pk=participant)
     d = Drink.objects.get(pk=drink)
+    quantity = int(quantity)
 
     # Check if there is an actual account, and otherwise return nothing
     try:
@@ -94,9 +95,10 @@ def buy_drink(request, participant, drink, quantity):
         return HttpResponseRedirect(reverse("pos:sale"))
 
     # Check if there are enough credits left
-    if p.account.get_credits_remaining() < d.price:
+    if p.account.get_credits_remaining() < d.price * quantity:
         return HttpResponseRedirect(reverse("pos:sale_insufficient"))
 
-    do = DrinkOrder.objects.create(account=p.account, drink=d)
-    do.save()
+    for i in range(quantity):
+        do = DrinkOrder.objects.create(account=p.account, drink=d)
+        do.save()
     return HttpResponseRedirect(reverse("pos:sale"))
