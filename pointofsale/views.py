@@ -9,16 +9,16 @@ from django.views.generic.edit import FormView
 from pointofsale.models import Drink, Account, DrinkOrder
 from pubsite.models import Participant, get_current_event, Event
 
-class BuyDrinkView(TemplateView):
-    template_name = "pointofsale/buydrink.html"
-    success_url = reverse_lazy("pos:buy_drink")
+class SaleView(TemplateView):
+    template_name = "pointofsale/sale.html"
+    success_url = reverse_lazy("pos:sale")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(BuyDrinkView, self).dispatch(*args, **kwargs)
+        return super(SaleView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(BuyDrinkView, self).get_context_data(**kwargs)
+        context = super(SaleView, self).get_context_data(**kwargs)
 
         # get the current event or don't do anything if there is none
         try:
@@ -61,7 +61,7 @@ class ParticipantOverview(TemplateView):
                     # participant does have an account
                     context['finished'].append(p)
         except IndexError:
-            pass
+            pass # return empty context
 
         return context
 
