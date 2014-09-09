@@ -6,6 +6,12 @@
 
 {% block content %}
 
+{% if insufficient %}
+    <div class="messagebox" id="error">
+        This person doesn't have enough credits left to buy this drink
+    </div>
+{% endif %}
+
 <div class="messagebox" id="buy">
     <table>
         <tr>
@@ -22,7 +28,7 @@
                     <td>{{ a.get_credits_used }}</td>
                     <td>
                         {% for d in drinks %}
-                            <a href="">{{ d.name }} ({{ d.price }})</a>
+                            <a href="{% url 'pos:buy_drink' a.participant.pk d.pk 1 %}">{{ d.name }} ({{ d.price }})</a>
                         {% endfor %}
                     </td>
                     <td>{{ a.credits }}</td>

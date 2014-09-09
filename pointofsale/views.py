@@ -12,6 +12,7 @@ from pubsite.models import Participant, get_current_event, Event
 class SaleView(TemplateView):
     template_name = "pointofsale/sale.html"
     success_url = reverse_lazy("pos:sale")
+    insufficient = False
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -19,6 +20,9 @@ class SaleView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SaleView, self).get_context_data(**kwargs)
+
+        # display an error if there was not enough money in the account to buy a drink
+        context['insufficient'] = self.insufficient
 
         # get the current event or don't do anything if there is none
         try:
@@ -77,3 +81,22 @@ def add_credits(request, participant):
         a = Account(participant=p, credits=5000)
         a.save()
     return HttpResponseRedirect(reverse("pos:participants"))
+
+@login_required
+def buy_drink(request, participant, drink, quantity):
+    p = Participant.objects.get(pk=participant)
+    d = Drink.objects.get(pk=drink)
+
+    # Check if there is an actual account, and otherwise return nothing
+    try:
+        p.account
+    except:
+        return HttpResponseRedirect(reverse("pos:sale"))
+
+    # Check if there are enough credits left
+    if p.account.get_credits_remaining() < d.price:
+        return HttpResponseRedirect(reverse("pos:sale_insufficient"))
+
+    do = DrinkOrder.objects.create(account=p.account, drink=d)
+    do.save()
+    return HttpResponseRedirect(reverse("pos:sale"))
