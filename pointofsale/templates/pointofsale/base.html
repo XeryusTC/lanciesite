@@ -11,6 +11,7 @@
 <ul>
     {% block navbar-buy %}<li><a href="{% url 'pos:sale' %}">Buy</a></li>{% endblock %}
     {% block navbar-participants %}<li><a href="{% url 'pos:participants' %}">Participants</a></li>{% endblock %}
+    <li><a href="{% url 'pos:generate_csv' %}">CSV</a></li>
 </ul>
 {% endblock navbar %}
 

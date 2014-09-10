@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -107,6 +108,42 @@ class AddCreditsRedirectView(RedirectView):
             a = Account(participant=p, credits=5000)
             a.save()
         return super(AddCreditsRedirectView, self).get_redirect_url(*args, **kwargs)
+
+
+class GenerateCSVView(TemplateView):
+    template_name = "pointofsale/csv.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(GenerateCSVView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(GenerateCSVView, self).get_context_data(**kwargs)
+
+        context['csv'] = "id,amount,name,address,place,IBAN,email,date\n"
+
+        e = get_current_event()
+        participants = Participant.objects.filter(event=e).order_by('account__debit_id')
+        for p in participants:
+            try:
+                id = p.account.debit_id
+                context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
+                    id=id*2-1, amount=p.price, name=p.user.get_full_name(),
+                    address=p.address + " " + p.postal_code, place=p.city,
+                    iban=p.iban, email=p.user.email, date=e.start_date)
+                context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
+                    id=id*2, amount=p.account.get_credits_used()/100.0, name=p.user.get_full_name(),
+                    address=p.address + " " + p.postal_code, place=p.city,
+                    iban=p.iban, email=p.user.email, date=e.end_date)
+            except:
+                # Nothing to do here, the participant doesn't have any costs so it shouldn't be reported in the csv
+                pass
+
+        return context
+
+    def render_to_response(self, context, **kwargs):
+        return super(TemplateView, self).render_to_response(context, content_type="text/plain", **kwargs) # override the MIME type
+
 
 class InsufficientFundsException(Exception):
     pass
