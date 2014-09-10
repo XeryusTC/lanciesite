@@ -18,6 +18,7 @@ class Event(models.Model):
 
     class Meta:
         ordering = ["-start_date"]
+        get_latest_by = "start_date"
 
 
 class Participant(models.Model):
@@ -66,4 +67,4 @@ def get_price(friday, saturday, sunday, transport, member):
     return price
 
 def get_current_event():
-    return Event.objects.all()[0]
+    return Event.objects.latest()
