@@ -72,6 +72,7 @@ class ParticipantOverview(TemplateView):
 
 class BuyDrinkRedirectView(RedirectView):
     pattern_name = "pos:sale"
+    permanent = False
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -89,21 +90,27 @@ class BuyDrinkRedirectView(RedirectView):
         return super(BuyDrinkRedirectView, self).get_redirect_url(*args, **kwargs)
 
 
+class AddCreditsRedirectView(RedirectView):
+    pattern_name = "pos:participants"
+    permanent = False
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AddCreditsRedirectView, self).dispatch(*args, **kwargs)
+
+    def get_redirect_url(self, participant, *args, **kwargs):
+        p = Participant.objects.get(pk=participant)
+        try:
+            p.account.credits += 5000
+            p.account.save()
+        except:
+            a = Account(participant=p, credits=5000)
+            a.save()
+        return super(AddCreditsRedirectView, self).get_redirect_url(*args, **kwargs)
+
 class InsufficientFundsException(Exception):
     pass
 
-
-@login_required
-def add_credits(request, participant):
-    p = Participant.objects.get(pk=participant)
-    try:
-        p.account.credits += 5000
-        p.account.save()
-    except:
-        # participant has no account yet so create it
-        a = Account(participant=p, credits=5000)
-        a.save()
-    return HttpResponseRedirect(reverse("pos:participants"))
 
 def buy_drink(participant, drink, quantity):
     p = Participant.objects.get(pk=participant)
