@@ -65,7 +65,7 @@ class ParticipantOverview(TemplateView):
                 else:
                     # participant does have an account
                     context['finished'].append(p)
-        except IndexError:
+        except Event.DoesNotExist:
             pass # return empty context
 
         return context
@@ -122,22 +122,25 @@ class GenerateCSVView(TemplateView):
 
         context['csv'] = "id,amount,name,address,place,IBAN,email,date\n"
 
-        e = get_current_event()
-        participants = Participant.objects.filter(event=e).order_by('account__debit_id')
-        for p in participants:
-            try:
-                id = p.account.debit_id
-                context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
-                    id=id*2-1, amount=p.price, name=p.user.get_full_name(),
-                    address=p.address + " " + p.postal_code, place=p.city,
-                    iban=p.iban, email=p.user.email, date=e.start_date)
-                context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
-                    id=id*2, amount=p.account.get_credits_used()/100.0, name=p.user.get_full_name(),
-                    address=p.address + " " + p.postal_code, place=p.city,
-                    iban=p.iban, email=p.user.email, date=e.end_date)
-            except:
-                # Nothing to do here, the participant doesn't have any costs so it shouldn't be reported in the csv
-                pass
+        try:
+            e = get_current_event()
+            participants = Participant.objects.filter(event=e).order_by('account__debit_id')
+            for p in participants:
+                try:
+                    id = p.account.debit_id
+                    context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
+                        id=id*2-1, amount=p.price, name=p.user.get_full_name(),
+                        address=p.address + " " + p.postal_code, place=p.city,
+                        iban=p.iban, email=p.user.email, date=e.start_date)
+                    context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
+                        id=id*2, amount=p.account.get_credits_used()/100.0, name=p.user.get_full_name(),
+                        address=p.address + " " + p.postal_code, place=p.city,
+                        iban=p.iban, email=p.user.email, date=e.end_date)
+                except:
+                    # Nothing to do here, the participant doesn't have any costs so it shouldn't be reported in the csv
+                    pass
+        except Event.DoesNotExist:
+            return context # There are no events so there is no CSV to be generated
 
         return context
 

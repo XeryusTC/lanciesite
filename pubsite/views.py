@@ -17,7 +17,7 @@ class EventTitleMixin(ContextMixin):
         try:
             event = get_current_event()
             context['event_title'] = event.name
-        except IndexError: # There are no events configured
+        except Event.DoesNotExist: # There are no events configured
             context['event_title'] = "There is no LANparty planned yet"
             return context
 
@@ -97,7 +97,6 @@ class RegisterOverrideView(RegisterView):
         try:
             event = get_current_event()
         except:
-            print
             self.template_name = "pubsite/register_closed.html"
         return super(FormView, self).get(request, *args, **kwargs)
 
