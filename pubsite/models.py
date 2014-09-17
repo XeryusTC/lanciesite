@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     timelapse = models.CharField(blank=True, max_length=255)
+    photo_book_id = models.IntegerField(blank=True, null=True)
 
     # date information
     start_date = models.DateField()
