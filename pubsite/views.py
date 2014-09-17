@@ -4,7 +4,7 @@ from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, DetailView
 from django.views.generic.base import ContextMixin
 import json, datetime, smtplib
 
@@ -103,6 +103,11 @@ class RegisterOverrideView(RegisterView):
 
 class ThanksView(EventTitleMixin, TemplateView):
     template_name = "pubsite/thanks.html"
+
+
+class EventDetailView(EventTitleMixin, DetailView):
+    model = Event
+    template_name = "pubsite/event.html"
 
 
 class JSONResponseMixin():

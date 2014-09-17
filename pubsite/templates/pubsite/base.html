@@ -36,7 +36,7 @@
     <div class="menucontent">
         <ul class="past_events">
             {% for event in past_events %}
-                <li>{{ event }}</li>
+                <li><a href="{% url 'pub:event_detail' event.pk %}">{{ event.name }}</a></li>
             {% empty %}
                 <li>There are no registered events yet</li>
             {% endfor %}
