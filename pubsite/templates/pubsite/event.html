@@ -1,5 +1,7 @@
 {% extends 'pubsite/base.html' %}
 
+{% block navbar-event-list %}<li class="active"><a href="{% url 'pub:event_list' %}">Past LANs</a></li>{% endblock navbar-event-list %}
+
 {% block content %}
 <div class="messagebox">
     <h1>{{ event.name }}</h1>

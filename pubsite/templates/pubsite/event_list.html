@@ -1,0 +1,20 @@
+{% extends 'pubsite/base.html' %}
+
+{% block navbar-event-list %}<li class="active"><a href="{% url 'pub:event_list' %}">Past LANs</a></li>{% endblock navbar-event-list %}
+
+{% block content %}
+<div class="messagebox">
+    {% for event in event_list %}
+        <p>
+            <b><a href="{% url 'pub:event_detail' event.pk %}">{{ event.name }}</a></b>
+            - {{ event.description | truncatewords:10 }}
+            {% if event.timelapse %}
+                - <a href="{{ event.timelapse }}">Timelapse</a>
+            {% endif %}
+            {% if event.photo_book_id %}
+                - <a href="https://www.svcover.nl/fotoboek.php?book={{ event.photo_book_id }}">Photos</a>
+            {% endif %}
+        </p>
+    {% endfor %}
+</div>
+{% endblock content %}

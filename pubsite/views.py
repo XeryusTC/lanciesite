@@ -4,7 +4,7 @@ from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, FormView, DetailView
+from django.views.generic import TemplateView, FormView, DetailView, ListView
 from django.views.generic.base import ContextMixin
 import json, datetime, smtplib
 
@@ -108,6 +108,12 @@ class ThanksView(EventTitleMixin, TemplateView):
 class EventDetailView(EventTitleMixin, DetailView):
     model = Event
     template_name = "pubsite/event.html"
+
+
+class EventListView(EventTitleMixin, ListView):
+    model = Event
+    template_name = "pubsite/event_list.html"
+    context_object_name = "event_list"
 
 
 class JSONResponseMixin():
