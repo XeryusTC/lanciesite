@@ -1,4 +1,6 @@
 {% extends 'pointofsale/base.html' %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
 
 {% block navbar-participants %}<li class="active"><a href="{% url 'pos:participants' %}">Participants</a></li>{% endblock %}
 
@@ -12,7 +14,8 @@
         {% for p in not_finished %}
             <tr>
                 <td>{{ p.user.get_full_name }}</td>
-                <td><a href="">Get forms</a></td>
+                <td><a href="{% get_static_prefix %}tex/{{ p.pk}}_entryfee.pdf">Entry fee form</a></td>
+                <td><a href="{% get_static_prefix %}tex/{{ p.pk}}_drinktab.pdf">Security form</a></td>
                 <td><a href="{% url 'pos:add_credits' p.pk %}">Grant credits</a></td>
             </tr>
         {% empty %}
@@ -31,6 +34,7 @@
         <th>Credits total</th>
         <th>Credits used</th>
         <th>Credits left</th>
+        <th>Debit forms</th>
     </tr>
     {% for p in finished %}
         <tr>
@@ -38,6 +42,10 @@
             <td>{{ p.account.credits }}</td>
             <td>{{ p.account.get_credits_used }}</td>
             <td>{{ p.account.get_credits_remaining }}</td>
+            <td>
+                <a href="{% get_static_prefix %}tex/{{ p.pk}}_entryfee.pdf">Entry fee</a> -
+                <a href="{% get_static_prefix %}tex/{{ p.pk}}_drinktab.pdf">Drinks</a>
+            </td>
             <td><a href="{% url 'pos:add_credits' p.pk %}">Grant extra credits</a></td>
         </tr>
     {% endfor %}

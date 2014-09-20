@@ -1,0 +1,58 @@
+\documentclass[a4paper]{article}
+\usepackage{graphicx}   % dingen met plaatjes
+\usepackage{amssymb}    % rare symbolen
+\usepackage{amsmath}    % wiskundige symbolen
+\usepackage{geometry}   % we hebben a4 papier in nl
+\usepackage[utf8]{inputenc} % voor de input encoding (linux gebruikt utf8)
+\usepackage{fancyhdr}   % voor de header bovenaan de pagina
+%\usepackage[dutch]{babel}   % Nederlandse woordafbreking
+\usepackage{eso-pic}	% watermark
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\usepackage{url}
+\usepackage{eurosym}
+\usepackage{color}
+\renewcommand*\familydefault{\sfdefault} %% Only if the font is to be sans serif
+
+\AddToShipoutPicture{\includegraphics{document_template.pdf}}
+\geometry{a4paper}
+\pagestyle{empty}
+\setlength{\intextsep}{3em}
+
+\begin{document}
+~\vspace{1cm}v
+
+\begin{flushright}
+\textcolor{gray}{ID\footnotemark{} :~~ $id}
+\end{flushright}
+~\vspace{-2,03cm}
+
+\section*{Direct Debit Form}
+I allow study association Cover (ID: NL48ZZZ400267070000) to debit the amount mentioned below from my bank account.
+
+\begin{table}[h!]
+\begin{tabular*}{\textwidth} {p{3,1cm} c p{10cm}}
+    Description & : & $description \\ \cline{3-3}\\
+    Committee & : & LanCie \\ \cline{3-3}\\
+    Amount & : & \euro $amount \\ \cline{3-3}\\
+    Name & : &  $name \\ \cline{3-3}\\
+    Address & : & $address \\ \cline{3-3}\\
+    Place of residence & : & $city \\ \cline{3-3}\\
+    IBAN & : & $iban \\ \cline{3-3}\\
+    Email & : & $email \\ \cline{3-3}\\
+    Date & : & $date \\ \cline{3-3}\\
+    \\[3em]
+    Signature & : & \\ \cline{3-3}
+\end{tabular*}
+\end{table}
+
+\noindent
+Cover will generally collect the amount within a month after receiving this form and send you a notification email at least 3 days in advance. In case you do not agree to the debit, your own bank will be able to cancel within 30 days after the collection.
+
+\noindent
+If you have any further questions, please contact the treasurer of Cover (penningmeester@svcover.nl).
+
+\footnotetext[1]{This field will be filled in by the treasurer of Cover}
+
+\end{document}
+

@@ -62,3 +62,8 @@ lanciesite/email_settings.py
 
 # Geany project files
 *.geany
+
+# LaTeX
+*.aux
+*.pdf
+tex/*.tex
