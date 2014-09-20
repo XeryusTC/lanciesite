@@ -83,7 +83,6 @@ class RegisterView(EventTitleMixin, FormView):
             form.errors[NON_FIELD_ERRORS] = form.error_class(["Could not send confirmation email but you should be registered. When in doubt please send a mail to lancie@svcover.nl"])
             return super(RegisterView, self).form_invalid(form)
         # TODO: create pointofsale account
-        # TODO: create debit forms (or possibly create these from a page in pointofsale)
 
         return super(RegisterView, self).form_valid(form)
 

@@ -16,7 +16,6 @@ class ContactForm(Form):
         email = self.cleaned_data['email']
         sender = "{name} <{email}>".format(name=self.cleaned_data['name'], email=email)
 
-        #TODO: use the actual lancie address here
         message = EmailMessage(self.cleaned_data['subject'], self.cleaned_data['message'],
             sender, [settings.EMAIL_CONTACT_DESTINATION], headers = {'Reply-To': email})
         message.send()
@@ -90,7 +89,6 @@ class RegisterForm(Form):
             price=get_price(data['friday'], data['saturday'], data['sunday'], data['transport'], data['cover_member']),
             comment=data['comment'], pcs=data['pcs'])
         p.save()
-        # TODO: send registration email
         return u
 
     def send_confirmation_mail(self):
@@ -110,8 +108,7 @@ class RegisterForm(Form):
             template = fin.read()
             message = string.Template(template)
             sender = "LanCie <" + settings.EMAIL_CONTACT_DESTINATION + ">"
-            email = EmailMessage("{} registration".format(event), message.substitute(data_dict),
-            sender, [data['email']], [sender])
+            email = EmailMessage("{} registration".format(event), message.substitute(data_dict), sender, [data['email']], [sender])
             email.send()
 
     def bool_to_human(self, b):
