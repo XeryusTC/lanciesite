@@ -24,13 +24,13 @@ if __name__ == "__main__":
             except:
                 a = None
                 base_id = 1
-            data = {'name': p.user.get_full_name(), 'address': p.address, 'city': p.city, 'iban': p.iban, 'email': p.user.email, 'date': date}
-            entryfee = {'description': e.name, 'amount': p.price, 'id': base_id*2-1}
+            data = {'name': p.user.get_full_name(), 'address': p.address, 'city': p.city, 'iban': p.iban, 'email': p.user.email}
+            entryfee = {'description': e.name, 'amount': p.price, 'id': base_id*2-1, 'date': e.start_date}
             entryfee.update(data)
             if a:
-                drinktab = {'description': e.name + " drinks", 'amount': "%2.2f" % (a.get_credits_used()/100), 'id': base_id*2}
+                drinktab = {'description': e.name + " drinks", 'amount': "%2.2f" % (a.get_credits_used()/100), 'id': base_id*2, 'date': e.end_date}
             else:
-                drinktab = {'description': "Security for drinks", 'amount': 50, 'id': base_id*2}
+                drinktab = {'description': "Security for drinks", 'amount': 50, 'id': base_id*2, 'date': e.end_date}
             drinktab.update(data)
 
             # generate the tex files
