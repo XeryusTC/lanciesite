@@ -3,16 +3,21 @@
 {% block navbar-contact %}<li class="active"><a href="{% url 'pub:contact' %}">Contact</a></li>{% endblock navbar-contact %}
 
 {% block content %}
+{% load bootstrap3 %}
+
 <div class="messagebox">
-    <form action="" method="post">
-    <table>
-        {% csrf_token %}
-        {{ form.as_table }}
-    <tr>
-        <td></td>
-        <td><input type="submit" value="Send" /></td>
-    </tr>
-    </table>
+    <form class="form-horizontal well" action="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal'%}
+           <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            {% endbuttons %}
+            </div>
+        </div>
     </form>
 </div>
 {% endblock content %}

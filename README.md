@@ -21,3 +21,10 @@ fill  in the details. Most of these are explained at
 http://docs.djangoproject.com/en/1.6/ref/settings/ with the exception of the
 `EMAIL_CONTACT_DESTINATION` setting, you should set this to the email address
 where you want to receive the contact messages.
+====
+Requirements
+-----
+To correctly format the forms in our bootstrap template an additional package is 
+required:
+
+django-bootstrap3 (https://github.com/dyve/django-bootstrap3)
