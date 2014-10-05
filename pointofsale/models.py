@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from pubsite.models import Participant, Event
+from pubsite.models import Participant, get_current_event
 
 class Drink(models.Model):
     name = models.CharField(max_length=32)
@@ -24,6 +24,9 @@ class Account(models.Model):
 
     drinks_bought = models.ManyToManyField(Drink, through='DrinkOrder')
 
+    class Meta:
+        ordering = ["participant__event", "participant__user__first_name", "participant__user__last_name"]
+
     def get_absolute_url(self):
         pass
 
@@ -32,8 +35,8 @@ class Account(models.Model):
     get_drinks_bought.short_description = "Total drinks bought"
 
     def get_credits_used_on_drinks(self):
-        # TODO: implement
-        return 0
+        used = DrinkOrder.objects.filter(account=self).aggregate(total_cost=models.Sum('cost'))['total_cost']
+        return used if used else 0
     get_credits_used_on_drinks.short_description = "Credits used for drinks"
 
     def get_credits_used(self):
@@ -58,13 +61,19 @@ class DrinkOrder(models.Model):
         ordering = ["-time"]
         get_latest_by = "time"
 
+    def save(self, *args, **kwargs):
+        # Set the cost to the price of the drink by default
+        if not self.cost:
+            self.cost = self.drink.price
+        super(DrinkOrder, self).save(*args, **kwargs)
+
     def __str__(self):
         return "[{1}] {2} - {0}".format(self.account, self.time, self.drink)
 
 
 def get_next_debit_id():
     try:
-        e = Event.objects.all()[0]
+        e = get_current_event()
     except IndexError:
         # There is no event, but return a (semi-)useful value for the debit form anyway
         return 1

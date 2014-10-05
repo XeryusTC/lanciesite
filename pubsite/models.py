@@ -5,6 +5,11 @@ from django.contrib.auth.models import User
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    timelapse = models.CharField(blank=True, max_length=255)
+    photo_book_id = models.IntegerField(blank=True, null=True)
+
+    # date information
     start_date = models.DateField()
     end_date = models.DateField()
     registration_deadline = models.DateTimeField()
@@ -18,6 +23,7 @@ class Event(models.Model):
 
     class Meta:
         ordering = ["-start_date"]
+        get_latest_by = "start_date"
 
 
 class Participant(models.Model):
@@ -50,6 +56,7 @@ class Participant(models.Model):
     def __str__(self):
         return "{} ({})".format(self.user.get_full_name(), self.event.name)
 
+
 def get_price(friday, saturday, sunday, transport, member):
     price = 20
     # only present one or two days
@@ -63,3 +70,6 @@ def get_price(friday, saturday, sunday, transport, member):
     if not member:
         price += 5
     return price
+
+def get_current_event():
+    return Event.objects.latest()

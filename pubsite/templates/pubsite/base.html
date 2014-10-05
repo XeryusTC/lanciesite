@@ -11,15 +11,22 @@
 {% block navbar-home %}<li><a href="{% url 'pub:home' %}">Home</a></li>{% endblock navbar-home %}
 {% block navbar-register %}<li><a href="{% url 'pub:register' %}">Register</a></li>{% endblock navbar-register %}
 {% block navbar-checklist %}<li><a href="{% url 'pub:checklist' %}">Checklist</a></li>{% endblock navbar-checklist %}
+{% block navbar-event-list %}
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Past LANs <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+        {% for event in past_events %}
+        <li><a href="{% url 'pub:event_detail' event.pk %}">{{ event.name }}</a></li>
+        {% empty %}
+        <li>No Events</li>
+        {% endfor %}
+    </ul>
+</li>
+{% endblock navbar-event-list %}
 {% block navbar-about %}<li><a href="{% url 'pub:about' %}">About</a></li>{% endblock navbar-about %}
 {% block navbar-contact %}<li><a href="{% url 'pub:contact' %}">Contact</a></li>{% endblock navbar-contact %}
 {% endblock navbar %}
 
 
-
-
 {% block content %}{% endblock content %}
-
-
-
 {% block footer %}LanCie{% endblock footer %}

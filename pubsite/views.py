@@ -4,20 +4,20 @@ from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, DetailView, ListView
 from django.views.generic.base import ContextMixin
 import json, datetime, smtplib
 
 from pubsite.forms import ContactForm, RegisterForm
-from pubsite.models import get_price, Event
+from pubsite.models import get_price, Event, get_current_event
 
 class EventTitleMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super(EventTitleMixin, self).get_context_data(**kwargs)
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
             context['event_title'] = event.name
-        except IndexError: # There are no events configured
+        except Event.DoesNotExist: # There are no events configured
             context['event_title'] = "There is no LANparty planned yet"
             return context
 
@@ -66,7 +66,7 @@ class RegisterView(EventTitleMixin, FormView):
 
     def get(self, request, *args, **kwargs):
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
         except: # There are no events yet
             self.template_name = "pubsite/register_closed.html"
         else:
@@ -83,7 +83,6 @@ class RegisterView(EventTitleMixin, FormView):
             form.errors[NON_FIELD_ERRORS] = form.error_class(["Could not send confirmation email but you should be registered. When in doubt please send a mail to lancie@svcover.nl"])
             return super(RegisterView, self).form_invalid(form)
         # TODO: create pointofsale account
-        # TODO: create debit forms (or possibly create these from a page in pointofsale)
 
         return super(RegisterView, self).form_valid(form)
 
@@ -95,15 +94,25 @@ class RegisterOverrideView(RegisterView):
 
     def get(self, request, *args, **kwargs):
         try:
-            event = Event.objects.all()[0]
+            event = get_current_event()
         except:
-            print
             self.template_name = "pubsite/register_closed.html"
         return super(FormView, self).get(request, *args, **kwargs)
 
 
 class ThanksView(EventTitleMixin, TemplateView):
     template_name = "pubsite/thanks.html"
+
+
+class EventDetailView(EventTitleMixin, DetailView):
+    model = Event
+    template_name = "pubsite/event.html"
+
+
+class EventListView(EventTitleMixin, ListView):
+    model = Event
+    template_name = "pubsite/event_list.html"
+    context_object_name = "event_list"
 
 
 class JSONResponseMixin():

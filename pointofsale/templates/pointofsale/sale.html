@@ -1,0 +1,42 @@
+{% extends 'pointofsale/base.html' %}
+
+{% block navbar-buy %}<li class="active"><a href="{% url 'pos:sale' %}">Buy</a></li>{% endblock %}
+
+{% block leftmenu %}{% endblock leftmenu %}
+
+{% block content %}
+
+{% if insufficient %}
+    <div class="messagebox" id="error">
+        This person doesn't have enough credits left to buy this drink
+    </div>
+{% endif %}
+
+<div class="messagebox" id="buy">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Spend</th>
+            <th>Buy</th>
+            <th>Credits</th>
+            <th>Remaining</th>
+        </tr>
+        {% for a in accounts %}
+            {% if a.get_credits_remaining > 0 %}
+                <tr>
+                    <td>{{ a.participant.user.get_full_name }}</td>
+                    <td>{{ a.get_credits_used }}</td>
+                    <td>
+                        {% for d in drinks %}
+                            <a href="{% url 'pos:buy_drink' a.participant.pk d.pk 1 %}">{{ d.name }} ({{ d.price }})</a>
+                        {% endfor %}
+                    </td>
+                    <td>{{ a.credits }}</td>
+                    <td>{{ a.get_credits_remaining }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock content %}

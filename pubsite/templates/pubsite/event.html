@@ -1,0 +1,17 @@
+{% extends 'pubsite/base.html' %}
+
+{% block navbar-event-list %}<li class="active"><a href="{% url 'pub:event_list' %}">Past LANs</a></li>{% endblock navbar-event-list %}
+
+{% block content %}
+<div class="messagebox">
+    <h1>{{ event.name }}</h1>
+    <p>{{ event.description }}</p>
+    {% if event.photo_book_id %}
+        <p><a href="https://www.svcover.nl/fotoboek.php?book={{ event.photo_book_id }}">Photos</a></p>
+    {% endif %}
+
+    {% if event.timelapse %}
+        <iframe width="420" height="315" src="{{ event.timelapse }}" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+</div>
+{% endblock content %}

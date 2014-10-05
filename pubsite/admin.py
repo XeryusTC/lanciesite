@@ -5,6 +5,7 @@ class EventAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name', 'registration_deadline']}),
         ('Weekend', {'fields': ['start_date', 'end_date']}),
+        ('Other', {'fields': ['timelapse', 'photo_book_id', 'description'], 'classes': ('collapse',)}),
     ]
     list_display = ('name', 'start_date', 'end_date', 'registration_deadline', 'get_total_registrations')
     search_fields = ['name']
