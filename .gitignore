@@ -67,3 +67,6 @@ lanciesite/email_settings.py
 *.aux
 *.pdf
 tex/*.tex
+
+#Pycharm IDE files
+.idea/
