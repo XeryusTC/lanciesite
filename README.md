@@ -1,11 +1,14 @@
 lanciesite
 ==========
+
 CSS
 -----
 The CSS for the new template is created with bootstrap and LESS.
 This project can be found at: https://github.com/IcyPalm/LanCie-css-rebuild
+
 Setup
 =====
+
 Email
 -----
 To enable the contact form on the public website a few steps need to be taken.
@@ -21,7 +24,7 @@ fill  in the details. Most of these are explained at
 http://docs.djangoproject.com/en/1.6/ref/settings/ with the exception of the
 `EMAIL_CONTACT_DESTINATION` setting, you should set this to the email address
 where you want to receive the contact messages.
-====
+
 Requirements
 -----
 To correctly format the forms in our bootstrap template an additional package is 
