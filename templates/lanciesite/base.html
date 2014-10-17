@@ -8,7 +8,6 @@
   <link href="{% static 'lanciesite/bootstrap.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'lanciesite/lancie.css' %}" rel="stylesheet" type="text/css" />
   {% block css %}{% endblock css %}
-  {% block scripts %}{% endblock scripts %}
   <title>{% block title %}You shouldn't see this title{% endblock title %}</title>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +29,7 @@
               {% endblock header %}
           </div>
           <div id="page-title-image" class="col-lg-4">
-              <img class="hidden-xs hidden-sm hidden-md" src="{% static 'lanciesite/stickman_little.png' %}" alt="Stickman" />     
+              <img class="hidden-xs hidden-sm hidden-md" src="{% static 'lanciesite/stickman_little.png' %}" alt="Stickman" />
           </div>
       </div>
   </div>
@@ -72,8 +71,8 @@
   </div>
   <div class="row">
     <p class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-      The weekend of 23, 24 and 25  May we (The LanCie) will be organizing yet another LAN party for the student association "Cover". If you would like to join us 
-      to an awesome weekend full of online and offline gaming, you can register by clicking the "register now" button, or by navigating too the registration form yourself 
+      The weekend of 23, 24 and 25  May we (The LanCie) will be organizing yet another LAN party for the student association "Cover". If you would like to join us
+      to an awesome weekend full of online and offline gaming, you can register by clicking the "register now" button, or by navigating too the registration form yourself
       through the navigation bar on the top of the page. To get a impression of previous LAN parties, you can watch one or more of the time lapses on this page.
   </p>
   <img class="img-rounded col-lg-5 col-md-5 col-sm-5 col-xs-12" src="    https://lancie.svcover.nl/themes/fancy/img/lan_impression_photo.jpg
@@ -98,5 +97,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="{% static 'lanciesite/bootstrap.min.js' %}"></script>
+        {% block scripts %}{% endblock scripts %}
 </body>
 </html>
