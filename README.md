@@ -31,3 +31,15 @@ To correctly format the forms in our bootstrap template an additional package is
 required:
 
 django-bootstrap3 (https://github.com/dyve/django-bootstrap3)
+
+Notes
+=====
+When generating debit forms in production is a two step process, which consists 
+of the following commands:
+```
+python generate_latex.py
+python manage.py collectstatic
+```
+When the last command asks you whether you're sure about what you're doing just 
+answer yes and the debit forms should be accessible from the point of sale.
+

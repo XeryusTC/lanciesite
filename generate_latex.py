@@ -2,12 +2,13 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lanciesite.settings")
 
-import datetime, string, subprocess
+import datetime, string, subprocess, django
 from lanciesite import settings
 from pubsite.models import Participant
 from pointofsale.models import Account, get_current_event
 
 if __name__ == "__main__":
+	django.setup()
     os.chdir("tex")
 
     with open("DirectDebitForm.tex", "r") as fin:
