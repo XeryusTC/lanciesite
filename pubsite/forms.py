@@ -5,6 +5,7 @@ from django.forms import Form, CharField, EmailField, BooleanField, Textarea, Va
 
 import string, random
 from pubsite.models import Participant, get_price, get_current_event
+import os
 
 class ContactForm(Form):
     name = CharField()
@@ -95,7 +96,7 @@ class RegisterForm(Form):
         data = self.cleaned_data
         event = get_current_event()
 
-        with open("pubsite/templates/pubsite/confirmation_mail.html") as fin:
+        with open(os.path.join(settings.BASE_DIR, "pubsite/templates/pubsite/confirmation_mail.html")) as fin:
             data_dict = {'event': event.name,
             'price': get_price(data['friday'], data['saturday'], data['sunday'], data['transport'], data['cover_member'])}
             data_dict.update(data)
