@@ -60,8 +60,8 @@ class Participant(models.Model):
 def get_price(friday, saturday, sunday, transport, member):
     price = 20
     # only present one or two days
-    if not (friday and saturday and sunday):
-        price = 14
+    if not (friday and saturday and sunday) and not (friday and saturday) and not (friday and sunday) and not (saturday and sunday):
+        price = 15
     # not present any of the days/no entry fee (BHV for example don't pay an entry fee)
     if not friday and not saturday and not sunday:
         price = 0
