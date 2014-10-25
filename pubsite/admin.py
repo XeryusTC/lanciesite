@@ -17,7 +17,7 @@ class ParticipantAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['user', 'event']}),
         ('Participation', {'fields': [('friday', 'saturday', 'sunday'), 'transport'], 'classes': ('collapse',)}),
-        ('Address', {'fields': ['address', 'city'], 'classes': ('extrawide', 'collapse')}),
+        ('Address', {'fields': ['address', 'city', 'postal_code'], 'classes': ('extrawide', 'collapse')}),
         ('Other', {'fields': ['telephone', 'iban'], 'classes': ('collapse',)}),
     ]
     list_display = ('__str__', 'friday', 'saturday', 'sunday', 'transport', 'get_price')
