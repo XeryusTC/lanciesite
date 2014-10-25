@@ -1,4 +1,5 @@
 {% extends 'pubsite/base.html' %}
+{% load staticfiles %}
 
 {% block navbar-checklist %}<li class="active"><a href="{% url 'pub:checklist' %}">Checklist</a></li>{% endblock navbar-checklist %}
 
@@ -7,6 +8,7 @@
     <h1>Things to bring with you</h1>
 </div>
 <ul>
+    <li>Bring a signed copy of the <a href="{% static 'pubsite/reglement.pdf' %}">regulations</a></li>
     <li>Your computer/laptop</li>
     <li>LAN cable(s)</li>
     <li>Headphones. Speakers are not allowed</li>
