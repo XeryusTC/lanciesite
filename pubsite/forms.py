@@ -37,7 +37,7 @@ class RegisterForm(Form):
     sunday = BooleanField(required=False)
     transport = BooleanField(label="Transport service", required=False)
     cover_member = BooleanField(label="Member of cover", required=False)
-    pcs = IntegerField(initial=1, label="Amount of PCs or laptops")
+    pcs = IntegerField(initial=1, label="Amount of PCs or laptops", min_value=0, max_value=10)
     comment = CharField(widget=Textarea, required=False)
 
     def clean_postal_code(self):
