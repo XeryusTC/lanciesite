@@ -35,10 +35,23 @@ class RegisterForm(Form):
     friday = BooleanField(required=False)
     saturday = BooleanField(required=False)
     sunday = BooleanField(required=False)
-    transport = BooleanField(label="Transport service", required=False)
-    cover_member = BooleanField(label="Member of cover", required=False)
+    transport = BooleanField(label="Transport service", required=False,
+		help_text="""Check this if you want to have your gear transported to the
+			LAN by us. We will contact you later with a time that we will come
+			around to pick up your gear. There is an additional charge for the
+			use of this service.""")
+    cover_member = BooleanField(label="Member of cover", required=False,
+		help_text="""Check this box if you are a member of Cover. Members get a
+			discount and have priority when we get more registrations than there
+			are places available.""")
     pcs = IntegerField(initial=1, label="Amount of PCs or laptops", min_value=0, max_value=10)
-    comment = CharField(widget=Textarea, required=False)
+    comment = CharField(widget=Textarea, required=False,
+		help_text="""Leave a comment here if you have any special remarks. If
+			you have special dietary needs (like vegetarianism or food
+			allergies) you should also put them here.""")
+    agree_price = BooleanField(label="I agree with Cover charging me the price mentioned at the bottom of this form")
+    agree_rules = BooleanField(label="I have read the regulations and will comply with them")
+
 
     def clean_postal_code(self):
         data = self.cleaned_data['postal_code']
