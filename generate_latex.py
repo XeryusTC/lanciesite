@@ -25,7 +25,7 @@ if __name__ == "__main__":
             except:
                 a = None
                 base_id = 1
-            data = {'name': p.user.get_full_name(), 'address': p.address, 'city': p.city, 'iban': p.iban, 'email': p.user.email}
+            data = {'name': p.user.get_full_name(), 'address': p.address, 'city': p.city, 'iban': p.iban, 'email': p.user.email.replace("_", "\_")}
             entryfee = {'description': e.name, 'amount': p.price, 'id': base_id*2-1, 'date': e.start_date}
             entryfee.update(data)
             if a:
