@@ -128,11 +128,11 @@ class GenerateCSVView(TemplateView):
             for p in participants:
                 try:
                     id = p.account.debit_id
-                    context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
+                    context['csv'] += """{id},{amount},"{name}","{address}","{place}","{iban}","{email}",{date}\n""".format(
                         id=id*2-1, amount=p.price, name=p.user.get_full_name(),
                         address=p.address + " " + p.postal_code, place=p.city,
                         iban=p.iban, email=p.user.email, date=e.start_date)
-                    context['csv'] += """{id},{amount},"{name}","{address}","{place}","iban","{email}",{date}\n""".format(
+                    context['csv'] += """{id},{amount},"{name}","{address}","{place}","{iban}","{email}",{date}\n""".format(
                         id=id*2, amount=p.account.get_credits_used()/100.0, name=p.user.get_full_name(),
                         address=p.address + " " + p.postal_code, place=p.city,
                         iban=p.iban, email=p.user.email, date=e.end_date)
