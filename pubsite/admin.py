@@ -20,7 +20,7 @@ class ParticipantAdmin(admin.ModelAdmin):
         ('Address', {'fields': ['address', 'city', 'postal_code'], 'classes': ('extrawide', 'collapse')}),
         ('Other', {'fields': ['telephone', 'iban'], 'classes': ('collapse',)}),
     ]
-    list_display = ('__str__', 'friday', 'saturday', 'sunday', 'transport', 'get_price')
+    list_display = ('__str__', 'friday', 'saturday', 'sunday', 'transport', 'price')
     list_filter = ('friday', 'saturday', 'sunday', 'transport', 'event')
     ordering = ('event__registration_deadline',)
 
